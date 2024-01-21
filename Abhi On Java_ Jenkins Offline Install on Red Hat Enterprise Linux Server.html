@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<!-- saved from url=(0091)https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html#google_vignette -->
+<html class="v2" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:b="http://www.google.com/2005/gml/b" xmlns:data="http://www.google.com/2005/gml/data" xmlns:expr="http://www.google.com/2005/gml/expr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/3566091532-css_bundle_v2.css" rel="stylesheet" type="text/css">
+<meta content="width=1100" name="viewport">
+
+<meta content="blogger" name="generator">
+<link href="https://java-x.blogspot.com/favicon.ico" rel="icon" type="image/x-icon">
+<link href="http://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html" rel="canonical">
+<link rel="alternate" type="application/atom+xml" title="Abhi On Java - Atom" href="https://java-x.blogspot.com/feeds/posts/default">
+<link rel="alternate" type="application/rss+xml" title="Abhi On Java - RSS" href="https://java-x.blogspot.com/feeds/posts/default?alt=rss">
+<link rel="service.post" type="application/atom+xml" title="Abhi On Java - Atom" href="https://www.blogger.com/feeds/18313336/posts/default">
+
+<link rel="alternate" type="application/atom+xml" title="Abhi On Java - Atom" href="https://java-x.blogspot.com/feeds/1822065214754061298/comments/default">
+<!--Can't find substitution for tag [blog.ieCssRetrofitLinks]-->
+<meta content="http://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html" property="og:url">
+<meta content="Jenkins Offline Install on Red Hat Enterprise Linux Server" property="og:title">
+<meta content="In this post we will see how to do an offline install Jenkins and required plugins on a Red Hat Enterprise Linux Server release 7.3. This is..." property="og:description">
+<title>Abhi On Java: Jenkins Offline Install on Red Hat Enterprise Linux Server</title>
+<style type="text/css">@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(//fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu72xKOzY.woff2)format('woff2');unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(//fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu5mxKOzY.woff2)format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(//fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7mxKOzY.woff2)format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(//fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4WxKOzY.woff2)format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(//fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7WxKOzY.woff2)format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(//fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7GxKOzY.woff2)format('woff2');unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(//fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2)format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;src:url(//fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfCRc4EsA.woff2)format('woff2');unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;src:url(//fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfABc4EsA.woff2)format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;src:url(//fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfCBc4EsA.woff2)format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;src:url(//fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBxc4EsA.woff2)format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;src:url(//fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfCxc4EsA.woff2)format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;src:url(//fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfChc4EsA.woff2)format('woff2');unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;src:url(//fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.woff2)format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}</style>
+<style>
+      
+         span.fullpost {display:inline;}
+      
+</style>
+<style id="page-skin-1" type="text/css"><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Simple
+Designer: Blogger
+URL:      www.blogger.com
+----------------------------------------------- */
+/* Variable definitions
+====================
+<Variable name="keycolor" description="Main Color" type="color" default="#66bbdd"/>
+<Group description="Page Text" selector="body">
+<Variable name="body.font" description="Font" type="font"
+default="normal normal 12px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="body.text.color" description="Text Color" type="color" default="#222222"/>
+</Group>
+<Group description="Backgrounds" selector=".body-fauxcolumns-outer">
+<Variable name="body.background.color" description="Outer Background" type="color" default="#66bbdd"/>
+<Variable name="content.background.color" description="Main Background" type="color" default="#ffffff"/>
+<Variable name="header.background.color" description="Header Background" type="color" default="transparent"/>
+</Group>
+<Group description="Links" selector=".main-outer">
+<Variable name="link.color" description="Link Color" type="color" default="#2288bb"/>
+<Variable name="link.visited.color" description="Visited Color" type="color" default="#888888"/>
+<Variable name="link.hover.color" description="Hover Color" type="color" default="#33aaff"/>
+</Group>
+<Group description="Blog Title" selector=".header h1">
+<Variable name="header.font" description="Font" type="font"
+default="normal normal 60px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="header.text.color" description="Title Color" type="color" default="#3399bb" />
+</Group>
+<Group description="Blog Description" selector=".header .description">
+<Variable name="description.text.color" description="Description Color" type="color"
+default="#777777" />
+</Group>
+<Group description="Tabs Text" selector=".tabs-inner .widget li a">
+<Variable name="tabs.font" description="Font" type="font"
+default="normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="tabs.text.color" description="Text Color" type="color" default="#999999"/>
+<Variable name="tabs.selected.text.color" description="Selected Color" type="color" default="#000000"/>
+</Group>
+<Group description="Tabs Background" selector=".tabs-outer .PageList">
+<Variable name="tabs.background.color" description="Background Color" type="color" default="#f5f5f5"/>
+<Variable name="tabs.selected.background.color" description="Selected Color" type="color" default="#eeeeee"/>
+</Group>
+<Group description="Post Title" selector="h3.post-title, .comments h4">
+<Variable name="post.title.font" description="Font" type="font"
+default="normal normal 22px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+</Group>
+<Group description="Date Header" selector=".date-header">
+<Variable name="date.header.color" description="Text Color" type="color"
+default="#000000"/>
+<Variable name="date.header.background.color" description="Background Color" type="color"
+default="transparent"/>
+<Variable name="date.header.font" description="Text Font" type="font"
+default="normal bold 11px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="date.header.padding" description="Date Header Padding" type="string" default="inherit"/>
+<Variable name="date.header.letterspacing" description="Date Header Letter Spacing" type="string" default="inherit"/>
+<Variable name="date.header.margin" description="Date Header Margin" type="string" default="inherit"/>
+</Group>
+<Group description="Post Footer" selector=".post-footer">
+<Variable name="post.footer.text.color" description="Text Color" type="color" default="#666666"/>
+<Variable name="post.footer.background.color" description="Background Color" type="color"
+default="#f9f9f9"/>
+<Variable name="post.footer.border.color" description="Shadow Color" type="color" default="#eeeeee"/>
+</Group>
+<Group description="Gadgets" selector="h2">
+<Variable name="widget.title.font" description="Title Font" type="font"
+default="normal bold 11px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="widget.title.text.color" description="Title Color" type="color" default="#000000"/>
+<Variable name="widget.alternate.text.color" description="Alternate Color" type="color" default="#999999"/>
+</Group>
+<Group description="Images" selector=".main-inner">
+<Variable name="image.background.color" description="Background Color" type="color" default="#ffffff"/>
+<Variable name="image.border.color" description="Border Color" type="color" default="#eeeeee"/>
+<Variable name="image.text.color" description="Caption Text Color" type="color" default="#000000"/>
+</Group>
+<Group description="Accents" selector=".content-inner">
+<Variable name="body.rule.color" description="Separator Line Color" type="color" default="#eeeeee"/>
+<Variable name="tabs.border.color" description="Tabs Border Color" type="color" default="rgba(0, 0, 0, 0)"/>
+</Group>
+<Variable name="body.background" description="Body Background" type="background"
+color="#ffffff" default="$(color) none repeat scroll top left"/>
+<Variable name="body.background.override" description="Body Background Override" type="string" default=""/>
+<Variable name="body.background.gradient.cap" description="Body Gradient Cap" type="url"
+default="url(https://resources.blogblog.com/blogblog/data/1kt/simple/gradients_light.png)"/>
+<Variable name="body.background.gradient.tile" description="Body Gradient Tile" type="url"
+default="url(https://resources.blogblog.com/blogblog/data/1kt/simple/body_gradient_tile_light.png)"/>
+<Variable name="content.background.color.selector" description="Content Background Color Selector" type="string" default=".content-inner"/>
+<Variable name="content.padding" description="Content Padding" type="length" default="10px" min="0" max="100px"/>
+<Variable name="content.padding.horizontal" description="Content Horizontal Padding" type="length" default="10px" min="0" max="100px"/>
+<Variable name="content.shadow.spread" description="Content Shadow Spread" type="length" default="40px" min="0" max="100px"/>
+<Variable name="content.shadow.spread.webkit" description="Content Shadow Spread (WebKit)" type="length" default="5px" min="0" max="100px"/>
+<Variable name="content.shadow.spread.ie" description="Content Shadow Spread (IE)" type="length" default="10px" min="0" max="100px"/>
+<Variable name="main.border.width" description="Main Border Width" type="length" default="0" min="0" max="10px"/>
+<Variable name="header.background.gradient" description="Header Gradient" type="url" default="none"/>
+<Variable name="header.shadow.offset.left" description="Header Shadow Offset Left" type="length" default="-1px" min="-50px" max="50px"/>
+<Variable name="header.shadow.offset.top" description="Header Shadow Offset Top" type="length" default="-1px" min="-50px" max="10px"/>
+<Variable name="header.shadow.spread" description="Header Shadow Spread" type="length" default="1px" min="0" max="100px"/>
+<Variable name="header.padding" description="Header Padding" type="length" default="0px" min="0" max="100px"/>
+<Variable name="header.border.size" description="Header Border Size" type="length" default="1px" min="0" max="10px"/>
+<Variable name="header.bottom.border.size" description="Header Bottom Border Size" type="length" default="1px" min="0" max="10px"/>
+<Variable name="header.border.horizontalsize" description="Header Horizontal Border Size" type="length" default="0" min="0" max="10px"/>
+<Variable name="description.text.size" description="Description Text Size" type="string" default="140%"/>
+<Variable name="tabs.margin.top" description="Tabs Margin Top" type="length" default="0" min="0" max="100px"/>
+<Variable name="tabs.margin.side" description="Tabs Side Margin" type="length" default="30px" min="0" max="100px"/>
+<Variable name="tabs.background.gradient" description="Tabs Background Gradient" type="url"
+default="url(https://resources.blogblog.com/blogblog/data/1kt/simple/gradients_light.png)"/>
+<Variable name="tabs.border.width" description="Tabs Border Width" type="length" default="1px" min="0" max="10px"/>
+<Variable name="tabs.bevel.border.width" description="Tabs Bevel Border Width" type="length" default="1px" min="0" max="10px"/>
+<Variable name="post.margin.bottom" description="Post Bottom Margin" type="length" default="25px" min="0" max="100px"/>
+<Variable name="image.border.small.size" description="Image Border Small Size" type="length" default="2px" min="0" max="10px"/>
+<Variable name="image.border.large.size" description="Image Border Large Size" type="length" default="5px" min="0" max="10px"/>
+<Variable name="page.width.selector" description="Page Width Selector" type="string" default=".region-inner"/>
+<Variable name="page.width" description="Page Width" type="string" default="auto"/>
+<Variable name="main.section.margin" description="Main Section Margin" type="length" default="15px" min="0" max="100px"/>
+<Variable name="main.padding" description="Main Padding" type="length" default="15px" min="0" max="100px"/>
+<Variable name="main.padding.top" description="Main Padding Top" type="length" default="30px" min="0" max="100px"/>
+<Variable name="main.padding.bottom" description="Main Padding Bottom" type="length" default="30px" min="0" max="100px"/>
+<Variable name="paging.background"
+color="rgba(0, 0, 0, 0)"
+description="Background of blog paging area" type="background"
+default="transparent none no-repeat scroll top center"/>
+<Variable name="footer.bevel" description="Bevel border length of footer" type="length" default="0" min="0" max="10px"/>
+<Variable name="mobile.background.overlay" description="Mobile Background Overlay" type="string"
+default="transparent none repeat scroll top left"/>
+<Variable name="mobile.background.size" description="Mobile Background Size" type="string" default="auto"/>
+<Variable name="mobile.button.color" description="Mobile Button Color" type="color" default="#ffffff" />
+<Variable name="startSide" description="Side where text starts in blog language" type="automatic" default="left"/>
+<Variable name="endSide" description="Side where text ends in blog language" type="automatic" default="right"/>
+*/
+/* Content
+----------------------------------------------- */
+body {
+font: normal normal 14px Roboto;
+color: #000000;
+background: #ffffff none repeat scroll top left;
+padding: 0 0 0 0;
+}
+html body .region-inner {
+min-width: 0;
+max-width: 100%;
+width: auto;
+}
+h2 {
+font-size: 22px;
+}
+a:link {
+text-decoration:none;
+color: #229966;
+}
+a:visited {
+text-decoration:none;
+color: #888888;
+}
+a:hover {
+text-decoration:underline;
+color: #33ffaa;
+}
+.body-fauxcolumn-outer .fauxcolumn-inner {
+background: transparent none repeat scroll top left;
+_background-image: none;
+}
+.body-fauxcolumn-outer .cap-top {
+position: absolute;
+z-index: 1;
+height: 400px;
+width: 100%;
+}
+.body-fauxcolumn-outer .cap-top .cap-left {
+width: 100%;
+background: transparent none repeat-x scroll top left;
+_background-image: none;
+}
+.content-outer {
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+-goog-ms-box-shadow: 0 0 0 #333333;
+box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+margin-bottom: 1px;
+}
+.content-inner {
+padding: 10px 40px;
+}
+.content-inner {
+background-color: rgba(0, 0, 0, 0);
+}
+/* Header
+----------------------------------------------- */
+.header-outer {
+background: rgba(0, 0, 0, 0) none repeat-x scroll 0 -400px;
+_background-image: none;
+}
+.Header h1 {
+font: normal bold 50px 'Courier New', Courier, FreeMono, monospace;
+color: #274e13;
+text-shadow: 0 0 0 rgba(0, 0, 0, .2);
+}
+.Header h1 a {
+color: #274e13;
+}
+.Header .description {
+font-size: 18px;
+color: #000000;
+}
+.header-inner .Header .titlewrapper {
+padding: 2px 0;
+}
+.header-inner .Header .descriptionwrapper {
+padding: 0 0;
+}
+/* Tabs
+----------------------------------------------- */
+.tabs-inner .section:first-child {
+border-top: 0 solid #5d997f;
+}
+.tabs-inner .section:first-child ul {
+margin-top: -1px;
+border-top: 1px solid #5d997f;
+border-left: 1px solid #5d997f;
+border-right: 1px solid #5d997f;
+}
+.tabs-inner .widget ul {
+background: #c2ebb2 none repeat-x scroll 0 -800px;
+_background-image: none;
+border-bottom: 1px solid #5d997f;
+margin-top: 0;
+margin-left: -30px;
+margin-right: -30px;
+}
+.tabs-inner .widget li a {
+display: inline-block;
+padding: .6em 1em;
+font: normal bold 18px Roboto;
+color: #7f6000;
+border-left: 1px solid rgba(0, 0, 0, 0);
+border-right: 1px solid #5d997f;
+}
+.tabs-inner .widget li:first-child a {
+border-left: none;
+}
+.tabs-inner .widget li.selected a, .tabs-inner .widget li a:hover {
+color: #ffffff;
+background-color: #93c47d;
+text-decoration: none;
+}
+/* Columns
+----------------------------------------------- */
+.main-outer {
+border-top: 0 solid rgba(0, 0, 0, 0);
+}
+.fauxcolumn-left-outer .fauxcolumn-inner {
+border-right: 1px solid rgba(0, 0, 0, 0);
+}
+.fauxcolumn-right-outer .fauxcolumn-inner {
+border-left: 1px solid rgba(0, 0, 0, 0);
+}
+/* Headings
+----------------------------------------------- */
+div.widget > h2,
+div.widget h2.title {
+margin: 0 0 1em 0;
+font: normal bold 11px Roboto;
+color: #b45f06;
+}
+/* Widgets
+----------------------------------------------- */
+.widget .zippy {
+color: #b45f06;
+text-shadow: 2px 2px 1px rgba(0, 0, 0, .1);
+}
+.widget .popular-posts ul {
+list-style: none;
+}
+/* Posts
+----------------------------------------------- */
+h2.date-header {
+font: normal bold 12px Roboto;
+}
+.date-header span {
+background-color: rgba(0, 0, 0, 0);
+color: #b45f06;
+padding: 0px;
+letter-spacing: 3px;
+margin: inherit;
+}
+.main-inner {
+padding-top: 35px;
+padding-bottom: 65px;
+}
+.main-inner .column-center-inner {
+padding: 0 0;
+}
+.main-inner .column-center-inner .section {
+margin: 0 1em;
+}
+.post {
+margin: 0 0 45px 0;
+}
+h3.post-title, .comments h4 {
+font: normal bold 24px Roboto;
+margin: .75em 0 0;
+}
+.post-body {
+font-size: 110%;
+line-height: 1.4;
+position: relative;
+}
+.post-body img, .post-body .tr-caption-container, .Profile img, .Image img,
+.BlogList .item-thumbnail img {
+padding: 2px;
+background: #ffffff;
+border: 1px solid #eeeeee;
+-moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+-webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+}
+.post-body img, .post-body .tr-caption-container {
+padding: 5px;
+}
+.post-body .tr-caption-container {
+color: #666666;
+}
+.post-body .tr-caption-container img {
+padding: 0;
+background: transparent;
+border: none;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+}
+.post-header {
+margin: 0 0 1.5em;
+line-height: 1.6;
+font-size: 90%;
+}
+.post-footer {
+margin: 20px -2px 0;
+padding: 5px 10px;
+color: #666666;
+background-color: #eeeeee;
+border-bottom: 1px solid #eeeeee;
+line-height: 1.6;
+font-size: 90%;
+}
+#comments .comment-author {
+padding-top: 1.5em;
+border-top: 1px solid rgba(0, 0, 0, 0);
+background-position: 0 1.5em;
+}
+#comments .comment-author:first-child {
+padding-top: 0;
+border-top: none;
+}
+.avatar-image-container {
+margin: .2em 0 0;
+}
+#comments .avatar-image-container img {
+border: 1px solid #eeeeee;
+}
+/* Comments
+----------------------------------------------- */
+.comments .comments-content .icon.blog-author {
+background-repeat: no-repeat;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB9sLFwMeCjjhcOMAAAD+SURBVDjLtZSvTgNBEIe/WRRnm3U8RC1neQdsm1zSBIU9VVF1FkUguQQsD9ITmD7ECZIJSE4OZo9stoVjC/zc7ky+zH9hXwVwDpTAWWLrgS3QAe8AZgaAJI5zYAmc8r0G4AHYHQKVwII8PZrZFsBFkeRCABYiMh9BRUhnSkPTNCtVXYXURi1FpBDgArj8QU1eVXUzfnjv7yP7kwu1mYrkWlU33vs1QNu2qU8pwN0UpKoqokjWwCztrMuBhEhmh8bD5UDqur75asbcX0BGUB9/HAMB+r32hznJgXy2v0sGLBcyAJ1EK3LFcbo1s91JeLwAbwGYu7TP/3ZGfnXYPgAVNngtqatUNgAAAABJRU5ErkJggg==);
+}
+.comments .comments-content .loadmore a {
+border-top: 1px solid #b45f06;
+border-bottom: 1px solid #b45f06;
+}
+.comments .comment-thread.inline-thread {
+background-color: #eeeeee;
+}
+.comments .continue {
+border-top: 2px solid #b45f06;
+}
+/* Accents
+---------------------------------------------- */
+.section-columns td.columns-cell {
+border-left: 1px solid rgba(0, 0, 0, 0);
+}
+.blog-pager {
+background: transparent url(https://resources.blogblog.com/blogblog/data/1kt/simple/paging_dot.png) repeat-x scroll top center;
+}
+.blog-pager-older-link, .home-link,
+.blog-pager-newer-link {
+background-color: rgba(0, 0, 0, 0);
+padding: 5px;
+}
+.footer-outer {
+border-top: 1px dashed #bbbbbb;
+}
+/* Mobile
+----------------------------------------------- */
+body.mobile  {
+background-size: auto;
+}
+.mobile .body-fauxcolumn-outer {
+background: transparent none repeat scroll top left;
+}
+.mobile .body-fauxcolumn-outer .cap-top {
+background-size: 100% auto;
+}
+.mobile .content-outer {
+-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+}
+.mobile .tabs-inner .widget ul {
+margin-left: 0;
+margin-right: 0;
+}
+.mobile .post {
+margin: 0;
+}
+.mobile .main-inner .column-center-inner .section {
+margin: 0;
+}
+.mobile .date-header span {
+padding: 0.1em 10px;
+margin: 0 -10px;
+}
+.mobile h3.post-title {
+margin: 0;
+}
+.mobile .blog-pager {
+background: transparent none no-repeat scroll top center;
+}
+.mobile .footer-outer {
+border-top: none;
+}
+.mobile .main-inner, .mobile .footer-inner {
+background-color: rgba(0, 0, 0, 0);
+}
+.mobile-index-contents {
+color: #000000;
+}
+.mobile-link-button {
+background-color: #229966;
+}
+.mobile-link-button a:link, .mobile-link-button a:visited {
+color: #ffffff;
+}
+.mobile .tabs-inner .section:first-child {
+border-top: none;
+}
+.mobile .tabs-inner .PageList .widget-content {
+background-color: #93c47d;
+color: #ffffff;
+border-top: 1px solid #5d997f;
+border-bottom: 1px solid #5d997f;
+}
+.mobile .tabs-inner .PageList .widget-content .pagelist-arrow {
+border-left: 1px solid #5d997f;
+}
+pre {
+width:100%;
+overflow: auto;
+max-height:300px;
+background-color: #f2f2f2;
+}
+code {
+padding: 2px 2px;
+font-size: 90%;
+color: #a5132c;
+background-color: #f4f4f4;
+border-radius: 6px;
+}
+pre code {
+padding: 2px 2px;
+font-size: 90%;
+color: inherit;
+background-color: inherit;
+border-radius: 6px;
+}
+h3, .h3 {
+font-size: 20px;
+}
+h4, .h4 {
+font-size: 18px;
+}
+h5, .h5 {
+font-size: 16px;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+font-family: inherit;
+font-weight: 600;
+line-height: 1.1;
+color: inherit;
+margin-top: 20px;
+margin-bottom: 10px;
+color:#b45f06;
+}
+#header {
+float:left;
+width:35%;
+}
+#header2 {
+float:right;
+width:60%;
+}
+.header-inner {
+margin-top: -25px;
+margin-bottom: -30px!important;
+}
+
+--></style>
+<style id="template-skin-1" type="text/css"><!--
+body {
+min-width: 1280px;
+line-height: 24px;
+}
+.content-outer, .content-fauxcolumn-outer, .region-inner {
+min-width: 1280px;
+max-width: 1280px;
+_width: 1280px;
+}
+.main-inner .columns {
+padding-left: 0px;
+padding-right: 350px;
+}
+.main-inner .fauxcolumn-center-outer {
+left: 0px;
+right: 350px;
+/* IE6 does not respect left and right together */
+_width: expression(this.parentNode.offsetWidth -
+parseInt("0px") -
+parseInt("350px") + 'px');
+}
+.main-inner .fauxcolumn-left-outer {
+width: 0px;
+}
+.main-inner .fauxcolumn-right-outer {
+width: 350px;
+}
+.main-inner .column-left-outer {
+width: 0px;
+right: 100%;
+margin-left: -0px;
+}
+.main-inner .column-right-outer {
+width: 350px;
+margin-right: -350px;
+}
+#layout {
+min-width: 0;
+}
+#layout .content-outer {
+min-width: 0;
+width: 800px;
+}
+#layout .region-inner {
+min-width: 0;
+width: auto;
+}
+body#layout div.add_widget {
+padding: 8px;
+}
+body#layout div.add_widget a {
+margin-left: 32px;
+}
+--></style>
+<script src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/f.txt"></script><script async="" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/async-ads.js"></script><script src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/sdk.js" async="" crossorigin="anonymous"></script><script type="text/javascript" async="" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/f(1).txt"></script><script id="facebook-jssdk" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/sdk(1).js"></script><script async="" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/analytics.js"></script><script type="text/javascript" async="" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/js"></script><script src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/f(2).txt" id="google_shimpl"></script><script async="" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/analytics.js"></script><script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-346891-1', 'auto', 'blogger');
+        ga('blogger.send', 'pageview');
+      </script>
+<link href="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/authorization.css" media="all" onload="if(media!=&#39;all&#39;)media=&#39;all&#39;" rel="stylesheet"><noscript><link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=18313336&amp;zx=c38249f4-c46a-44c2-af11-797573e9641c' rel='stylesheet'/></noscript>
+<meta name="google-adsense-platform-account" content="ca-host-pub-1556223355139109">
+<meta name="google-adsense-platform-domain" content="blogspot.com">
+
+<!-- data-ad-client=ca-pub-3721999749064364 -->
+
+<meta http-equiv="origin-trial" content="As0hBNJ8h++fNYlkq8cTye2qDLyom8NddByiVytXGGD0YVE+2CEuTCpqXMDxdhOMILKoaiaYifwEvCRlJ/9GcQ8AAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3MTk1MzI3OTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="AgRYsXo24ypxC89CJanC+JgEmraCCBebKl8ZmG7Tj5oJNx0cmH0NtNRZs3NB5ubhpbX/bIt7l2zJOSyO64NGmwMAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3MTk1MzI3OTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A/ERL66fN363FkXxgDc6F1+ucRUkAhjEca9W3la6xaLnD2Y1lABsqmdaJmPNaUKPKVBRpyMKEhXYl7rSvrQw+AkAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A6OdGH3fVf4eKRDbXb4thXA4InNqDJDRhZ8U533U/roYjp4Yau0T3YSuc63vmAs/8ga1cD0E3A7LEq6AXk1uXgsAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="As0hBNJ8h++fNYlkq8cTye2qDLyom8NddByiVytXGGD0YVE+2CEuTCpqXMDxdhOMILKoaiaYifwEvCRlJ/9GcQ8AAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3MTk1MzI3OTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="AgRYsXo24ypxC89CJanC+JgEmraCCBebKl8ZmG7Tj5oJNx0cmH0NtNRZs3NB5ubhpbX/bIt7l2zJOSyO64NGmwMAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3MTk1MzI3OTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A/ERL66fN363FkXxgDc6F1+ucRUkAhjEca9W3la6xaLnD2Y1lABsqmdaJmPNaUKPKVBRpyMKEhXYl7rSvrQw+AkAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A6OdGH3fVf4eKRDbXb4thXA4InNqDJDRhZ8U533U/roYjp4Yau0T3YSuc63vmAs/8ga1cD0E3A7LEq6AXk1uXgsAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="As0hBNJ8h++fNYlkq8cTye2qDLyom8NddByiVytXGGD0YVE+2CEuTCpqXMDxdhOMILKoaiaYifwEvCRlJ/9GcQ8AAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3MTk1MzI3OTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="AgRYsXo24ypxC89CJanC+JgEmraCCBebKl8ZmG7Tj5oJNx0cmH0NtNRZs3NB5ubhpbX/bIt7l2zJOSyO64NGmwMAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3MTk1MzI3OTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A/ERL66fN363FkXxgDc6F1+ucRUkAhjEca9W3la6xaLnD2Y1lABsqmdaJmPNaUKPKVBRpyMKEhXYl7rSvrQw+AkAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A6OdGH3fVf4eKRDbXb4thXA4InNqDJDRhZ8U533U/roYjp4Yau0T3YSuc63vmAs/8ga1cD0E3A7LEq6AXk1uXgsAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="As0hBNJ8h++fNYlkq8cTye2qDLyom8NddByiVytXGGD0YVE+2CEuTCpqXMDxdhOMILKoaiaYifwEvCRlJ/9GcQ8AAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3MTk1MzI3OTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="AgRYsXo24ypxC89CJanC+JgEmraCCBebKl8ZmG7Tj5oJNx0cmH0NtNRZs3NB5ubhpbX/bIt7l2zJOSyO64NGmwMAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3MTk1MzI3OTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A/ERL66fN363FkXxgDc6F1+ucRUkAhjEca9W3la6xaLnD2Y1lABsqmdaJmPNaUKPKVBRpyMKEhXYl7rSvrQw+AkAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A6OdGH3fVf4eKRDbXb4thXA4InNqDJDRhZ8U533U/roYjp4Yau0T3YSuc63vmAs/8ga1cD0E3A7LEq6AXk1uXgsAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="As0hBNJ8h++fNYlkq8cTye2qDLyom8NddByiVytXGGD0YVE+2CEuTCpqXMDxdhOMILKoaiaYifwEvCRlJ/9GcQ8AAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3MTk1MzI3OTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="AgRYsXo24ypxC89CJanC+JgEmraCCBebKl8ZmG7Tj5oJNx0cmH0NtNRZs3NB5ubhpbX/bIt7l2zJOSyO64NGmwMAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3MTk1MzI3OTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A/ERL66fN363FkXxgDc6F1+ucRUkAhjEca9W3la6xaLnD2Y1lABsqmdaJmPNaUKPKVBRpyMKEhXYl7rSvrQw+AkAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A6OdGH3fVf4eKRDbXb4thXA4InNqDJDRhZ8U533U/roYjp4Yau0T3YSuc63vmAs/8ga1cD0E3A7LEq6AXk1uXgsAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MTkzNTk5OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><script src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/cse_element__en.js" type="text/javascript"></script><link type="text/css" href="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/default+en.css" rel="stylesheet"><link type="text/css" href="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/default.css" rel="stylesheet"><style type="text/css">.gsc-control-cse{font-family:arial, sans-serif}.gsc-control-cse .gsc-table-result{font-family:arial, sans-serif}.gsc-refinementsGradient{background:linear-gradient(to left,rgba(255,255,255,1),rgba(255,255,255,0))}.gsc-control-cse{border-color:#FFFFFF;background-color:#FFFFFF}input.gsc-input,.gsc-input-box,.gsc-input-box-hover,.gsc-input-box-focus{border-color:#D9D9D9}.gsc-search-button-v2,.gsc-search-button-v2:hover,.gsc-search-button-v2:focus{border-color:#2F5BB7;background-color:#357AE8;background-image:none;filter:none}.gsc-search-button-v2 svg{fill:#FFFFFF}.gsc-tabHeader.gsc-tabhActive,.gsc-refinementHeader.gsc-refinementhActive{color:#CCCCCC;border-color:#CCCCCC;background-color:#FFFFFF}.gsc-tabHeader.gsc-tabhInactive,.gsc-refinementHeader.gsc-refinementhInactive{color:#CCCCCC;border-color:#CCCCCC;background-color:#FFFFFF}.gsc-webResult.gsc-result,.gsc-results .gsc-imageResult{border-color:#FFFFFF;background-color:#FFFFFF}.gsc-webResult.gsc-result:hover{border-color:#FFFFFF;background-color:#FFFFFF}.gs-webResult.gs-result a.gs-title:link,.gs-webResult.gs-result a.gs-title:link b,.gs-imageResult a.gs-title:link,.gs-imageResult a.gs-title:link b{color:#1155CC}.gs-webResult.gs-result a.gs-title:visited,.gs-webResult.gs-result a.gs-title:visited b,.gs-imageResult a.gs-title:visited,.gs-imageResult a.gs-title:visited b{color:#1155CC}.gs-webResult.gs-result a.gs-title:hover,.gs-webResult.gs-result a.gs-title:hover b,.gs-imageResult a.gs-title:hover,.gs-imageResult a.gs-title:hover b{color:#1155CC}.gs-webResult.gs-result a.gs-title:active,.gs-webResult.gs-result a.gs-title:active b,.gs-imageResult a.gs-title:active,.gs-imageResult a.gs-title:active b{color:#1155CC}.gsc-cursor-page{color:#1155CC}a.gsc-trailing-more-results:link{color:#1155CC}.gs-webResult:not(.gs-no-results-result):not(.gs-error-result) .gs-snippet,.gs-fileFormatType{color:#333333}.gs-webResult div.gs-visibleUrl{color:#009933}.gs-webResult div.gs-visibleUrl-short{color:#009933}.gsc-cursor-box{border-color:#FFFFFF}.gsc-results .gsc-cursor-box .gsc-cursor-page{border-color:#CCCCCC;background-color:#FFFFFF;color:#CCCCCC}.gsc-results .gsc-cursor-box .gsc-cursor-current-page{border-color:#CCCCCC;background-color:#FFFFFF;color:#CCCCCC}.gsc-webResult.gsc-result.gsc-promotion{border-color:#F6F6F6;background-color:#F6F6F6}.gsc-completion-title{color:#1155CC}.gsc-completion-snippet{color:#333333}.gs-promotion a.gs-title:link,.gs-promotion a.gs-title:link *,.gs-promotion .gs-snippet a:link{color:#1155CC}.gs-promotion a.gs-title:visited,.gs-promotion a.gs-title:visited *,.gs-promotion .gs-snippet a:visited{color:#1155CC}.gs-promotion a.gs-title:hover,.gs-promotion a.gs-title:hover *,.gs-promotion .gs-snippet a:hover{color:#1155CC}.gs-promotion a.gs-title:active,.gs-promotion a.gs-title:active *,.gs-promotion .gs-snippet a:active{color:#1155CC}.gs-promotion .gs-snippet,.gs-promotion .gs-title .gs-promotion-title-right,.gs-promotion .gs-title .gs-promotion-title-right *{color:#333333}.gs-promotion .gs-visibleUrl,.gs-promotion .gs-visibleUrl-short{color:#009933}.gcsc-find-more-on-google{color:#1155CC}.gcsc-find-more-on-google-magnifier{fill:#1155CC}</style><style type="text/css">.gscb_a{display:inline-block;font:27px/13px arial,sans-serif}.gsst_a .gscb_a{color:#a1b9ed;cursor:pointer}.gsst_a:hover .gscb_a,.gsst_a:focus .gscb_a{color:#36c}.gsst_a{display:inline-block}.gsst_a{cursor:pointer;padding:0 4px}.gsst_a:hover{text-decoration:none!important}.gsst_b{font-size:16px;padding:0 2px;position:relative;user-select:none;-webkit-user-select:none;white-space:nowrap}.gsst_e{vertical-align:middle;opacity:0.55;}.gsst_a:hover .gsst_e,.gsst_a:focus .gsst_e{opacity:0.72;}.gsst_a:active .gsst_e{opacity:1;}.gsst_f{background:white;text-align:left}.gsst_g{background-color:white;border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.2);margin:-1px -3px;padding:0 6px}.gsst_h{background-color:white;height:1px;margin-bottom:-1px;position:relative;top:-1px}.gsib_a{width:100%;padding:4px 6px 0}.gsib_a,.gsib_b{vertical-align:top}.gssb_c{border:0;position:absolute;z-index:989}.gssb_e{border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.2);cursor:default}.gssb_f{visibility:hidden;white-space:nowrap}.gssb_k{border:0;display:block;position:absolute;top:0;z-index:988}.gsdd_a{border:none!important}.gsq_a{padding:0}.gssb_a{padding:0 7px}.gssb_a,.gssb_a td{white-space:nowrap;overflow:hidden;line-height:22px}#gssb_b{font-size:11px;color:#36c;text-decoration:none}#gssb_b:hover{font-size:11px;color:#36c;text-decoration:underline}.gssb_g{text-align:center;padding:8px 0 7px;position:relative}.gssb_h{font-size:15px;height:28px;margin:0.2em;-webkit-appearance:button}.gssb_i{background:#eee}.gss_ifl{visibility:hidden;padding-left:5px}.gssb_i .gss_ifl{visibility:visible}a.gssb_j{font-size:13px;color:#36c;text-decoration:none;line-height:100%}a.gssb_j:hover{text-decoration:underline}.gssb_l{height:1px;background-color:#e5e5e5}.gssb_m{color:#000;background:#fff}.gssb_a{padding:0 9px}.gsib_a{padding:5px 9px 4px 9px}.gscb_a{line-height:27px}.gssb_e{border:0}.gssb_l{margin:5px 0}input.gsc-input::-webkit-input-placeholder{font-size:14px}input.gsc-input:-moz-placeholder{font-size:14px}input.gsc-input::-moz-placeholder{font-size:14px}input.gsc-input:-ms-input-placeholder{font-size:14px}input.gsc-input:focus::-webkit-input-placeholder{color:transparent}input.gsc-input:focus:-moz-placeholder{color:transparent}input.gsc-input:focus::-moz-placeholder{color:transparent}input.gsc-input:focus:-ms-input-placeholder{color:transparent}.gssb_c .gsc-completion-container{position:static}.gssb_c{z-index:5000}.gsc-completion-container table{background:transparent;font-size:inherit;font-family:inherit}.gssb_c > tbody > tr,.gssb_c > tbody > tr > td,.gssb_d,.gssb_d > tbody > tr,.gssb_d > tbody > tr > td,.gssb_e,.gssb_e > tbody > tr,.gssb_e > tbody > tr > td{padding:0;margin:0;border:0}.gssb_a table,.gssb_a table tr,.gssb_a table tr td{padding:0;margin:0;border:0}</style><link type="text/css" rel="stylesheet" href="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/css"><link type="text/css" rel="stylesheet" href="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/css(1)"><style type="text/css" data-fbcssmodules="css:fb.css.base css:fb.css.dialog css:fb.css.iframewidget css:fb.css.customer_chat_plugin_iframe">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://connect.facebook.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://connect.facebook.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://connect.facebook.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style></head>
+<body class="" aria-hidden="false">
+<div class="body-fauxcolumns">
+<div class="fauxcolumn-outer body-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content" style="height: auto !important;">
+<div class="content-fauxcolumns">
+<div class="fauxcolumn-outer content-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content-outer" style="height: auto !important;">
+<div class="content-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left content-fauxborder-left" style="height: auto !important;">
+<div class="fauxborder-right content-fauxborder-right"></div>
+<div class="content-inner" style="height: auto !important;">
+<header>
+<div class="header-outer" style="height: auto !important;">
+<div class="header-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left header-fauxborder-left" style="height: auto !important;">
+<div class="fauxborder-right header-fauxborder-right"></div>
+<div class="region-inner header-inner" style="height: auto !important;">
+<div class="header section" id="header" name="Header"><div class="widget Header" data-version="1" id="Header1">
+<div id="header-inner">
+<div class="titlewrapper">
+<h1 class="title">
+<a href="https://java-x.blogspot.com/">
+Abhi On Java
+</a>
+</h1>
+</div>
+</div>
+</div></div>
+<div class="header section" id="header2" style="height: auto !important;"><div class="widget HTML" data-version="1" id="HTML8">
+<div class="widget-content">
+<script async="" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/f(3).txt"></script>
+<!-- BlogMainHeader -->
+<ins class="adsbygoogle" style="display: block; height: 280px;" data-ad-client="ca-pub-3721999749064364" data-ad-slot="6901558424" data-ad-format="auto" data-adsbygoogle-status="done" data-ad-status="filled"><div id="aswift_0_host" style="border: none; height: 280px; width: 660px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: visible;" tabindex="0" title="Advertisement" aria-label="Advertisement"><iframe id="aswift_0" name="aswift_0" browsingtopics="true" style="left:0;position:absolute;top:0;border:0;width:660px;height:280px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="660" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/ads.html" data-google-container-id="a!1" data-google-query-id="CLn4id-564MDFbyErAId8GUKiw" data-load-complete="true"></iframe></div></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<div class="clear"></div>
+</div></div>
+<div style="clear:both;"></div>
+</div>
+</div>
+<div class="header-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</header>
+<div class="tabs-outer">
+<div class="tabs-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left tabs-fauxborder-left">
+<div class="fauxborder-right tabs-fauxborder-right"></div>
+<div class="region-inner tabs-inner">
+<div class="tabs no-items section" id="crosscol" name="Cross-Column"></div>
+<div class="tabs section" id="crosscol-overflow" name="Cross-Column 2"><div class="widget PageList" data-version="1" id="PageList1">
+<h2>Pages</h2>
+<div class="widget-content">
+<ul>
+<li>
+<a href="https://java-x.blogspot.com/">Home</a>
+</li>
+<li>
+<a href="https://java-x.blogspot.com/p/blog-page.html">Java 8</a>
+</li>
+<li>
+<a href="https://java-x.blogspot.com/p/java-9.html">Java 9 Features with Examples</a>
+</li>
+</ul>
+<div class="clear"></div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="tabs-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="main-outer">
+<div class="main-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left main-fauxborder-left">
+<div class="fauxborder-right main-fauxborder-right"></div>
+<div class="region-inner main-inner">
+<div class="columns fauxcolumns">
+<div class="fauxcolumn-outer fauxcolumn-center-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-left-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-right-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<!-- corrects IE6 width calculation -->
+<div class="columns-inner">
+<div class="column-center-outer">
+<div class="column-center-inner">
+<div class="main section" id="main" name="Main"><div class="widget Blog" data-version="1" id="Blog1">
+<div class="blog-posts hfeed">
+
+          <div class="date-outer">
+        
+<h2 class="date-header"><span>Sunday, October 08, 2017</span></h2>
+
+          <div class="date-posts">
+        
+<div class="post-outer">
+<div class="post hentry uncustomized-post-template" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="18313336" itemprop="blogId">
+<meta content="1822065214754061298" itemprop="postId">
+<a name="1822065214754061298"></a>
+<h3 class="post-title entry-title" itemprop="name">
+Jenkins Offline Install on Red Hat Enterprise Linux Server
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-1822065214754061298" itemprop="description articleBody">
+In this post we will see how to do an offline install Jenkins and required plugins on a Red Hat Enterprise Linux Server release 7.3. This is likely the case when your server is behind a firewall. But you have access to internet from your workspace. The assumption here is that you have sudo access on the server to do the install. Follow these steps...<a name="more"></a>
+<ol><li>Make sure you have Java 8 or higher installed on your server and that JAVA_HOME is set, as well as $JAVA_HOME/bin is in PATH</li><li>Download the RPM key for jenkins from <a href="https://jenkins-ci.org/redhat/jenkins-ci.org.key">https://jenkins-ci.org/redhat/jenkins-ci.org.key</a>.</li><li>Import the key<pre><code>sudo rpm --import jenkins-ci.org.key</code></pre></li><li>Download the rpm package for the Jenkins version you want to install from <a href="http://pkg.jenkins.io/redhat-stable/">http://pkg.jenkins.io/redhat-stable/</a>. </li><li>Install Jenkins using the following command<pre><code>sudo yum install jenkins-2.73.1-1.1.noarch.rpm</code></pre></li></ol><h5>Jenkins Installation Folder on Red Hat Enterprise Linux Server release 7.3</h5>Once you are done with the above steps, Jenkins will be installed in <code>/var/lib/jenkins</code> folder. You will also be able to see the jenkins.war file in /usr/lib/jenkins folder.<h5>Start and Stop Jenkins manually</h5>To start and stop Jenkins manually instead of using systemctl, you can use the following commands <pre><code>sudo service jenkins start</code></pre><pre><code>sudo service jenkins stop</code></pre><h5>Setup Jenkins Plugins in Offline Mode</h5>To install plugins in offline mode, you have download the .hpi plugin file from <a href="https://updates.jenkins-ci.org/download/plugins/">https://updates.jenkins-ci.org/download/plugins/</a>. However, if you go this route, you will have to download the dependencies too, which can make this task near impossible. The easier way is to <ol><li>Install Jenkins and the related plugins on your workstation, or any other machine (It can be Windows machine too).</li><li>Once all the plugins are downloaded, you can copy the plugins folder from the workstation to the Jenkins server /var/lib/jenkins folder. </li><li>After you copy, just stop and start Jenkins, and you will see that all your plugins are installed.</li></ol>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1">
+<span class="post-author vcard">
+Posted by
+<span class="fn" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+<meta content="https://www.blogger.com/profile/05788965755655733389" itemprop="url">
+<a class="g-profile" href="https://www.blogger.com/profile/05788965755655733389" rel="author" title="author profile">
+<span itemprop="name">abhi</span>
+</a>
+</span>
+</span>
+<span class="post-timestamp">
+at
+<meta content="http://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html" itemprop="url">
+<a class="timestamp-link" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html" rel="bookmark" title="permanent link"><abbr class="published" itemprop="datePublished" title="2017-10-08T17:01:00-04:00">5:01 PM</abbr></a>
+</span>
+<span class="post-comment-link">
+</span>
+<span class="post-icons">
+<span class="item-action">
+<a href="https://www.blogger.com/email-post.g?blogID=18313336&amp;postID=1822065214754061298" title="Email Post">
+<img alt="" class="icon-action" height="13" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/icon18_email.gif" width="18">
+</a>
+</span>
+<span class="item-control blog-admin pid-1298255427">
+<a href="https://www.blogger.com/post-edit.g?blogID=18313336&amp;postID=1822065214754061298&amp;from=pencil" title="Edit Post">
+<img alt="" class="icon-action" height="18" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/icon18_edit_allbkg.gif" width="18">
+</a>
+</span>
+</span>
+<div class="post-share-buttons goog-inline-block">
+<a class="goog-inline-block share-button sb-email" href="https://www.blogger.com/share-post.g?blogID=18313336&amp;postID=1822065214754061298&amp;target=email" target="_blank" title="Email This"><span class="share-button-link-text">Email This</span></a><a class="goog-inline-block share-button sb-blog" href="https://www.blogger.com/share-post.g?blogID=18313336&amp;postID=1822065214754061298&amp;target=blog" onclick="window.open(this.href, &quot;_blank&quot;, &quot;height=270,width=475&quot;); return false;" target="_blank" title="BlogThis!"><span class="share-button-link-text">BlogThis!</span></a><a class="goog-inline-block share-button sb-twitter" href="https://www.blogger.com/share-post.g?blogID=18313336&amp;postID=1822065214754061298&amp;target=twitter" target="_blank" title="Share to Twitter"><span class="share-button-link-text">Share to Twitter</span></a><a class="goog-inline-block share-button sb-facebook" href="https://www.blogger.com/share-post.g?blogID=18313336&amp;postID=1822065214754061298&amp;target=facebook" onclick="window.open(this.href, &quot;_blank&quot;, &quot;height=430,width=640&quot;); return false;" target="_blank" title="Share to Facebook"><span class="share-button-link-text">Share to Facebook</span></a><a class="goog-inline-block share-button sb-pinterest" href="https://www.blogger.com/share-post.g?blogID=18313336&amp;postID=1822065214754061298&amp;target=pinterest" target="_blank" title="Share to Pinterest"><span class="share-button-link-text">Share to Pinterest</span></a>
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2">
+<span class="post-labels">
+Labels:
+<a href="https://java-x.blogspot.com/search/label/DevOps" rel="tag">DevOps</a>,
+<a href="https://java-x.blogspot.com/search/label/Jenkins" rel="tag">Jenkins</a>,
+<a href="https://java-x.blogspot.com/search/label/Linux" rel="tag">Linux</a>,
+<a href="https://java-x.blogspot.com/search/label/Redhat" rel="tag">Redhat</a>
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3">
+<span class="post-location">
+</span>
+</div>
+</div>
+</div>
+<div class="comments" id="comments">
+<a name="comments"></a>
+<h4>23 comments:</h4>
+<div class="comments-content">
+<script async="async" src="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html" type="text/javascript"></script>
+<script type="text/javascript">
+    (function() {
+      var items = null;
+      var msgs = null;
+      var config = {};
+
+// <![CDATA[
+      var cursor = null;
+      if (items && items.length > 0) {
+        cursor = parseInt(items[items.length - 1].timestamp) + 1;
+      }
+
+      var bodyFromEntry = function(entry) {
+        var text = (entry &&
+                    ((entry.content && entry.content.$t) ||
+                     (entry.summary && entry.summary.$t))) ||
+            '';
+        if (entry && entry.gd$extendedProperty) {
+          for (var k in entry.gd$extendedProperty) {
+            if (entry.gd$extendedProperty[k].name == 'blogger.contentRemoved') {
+              return '<span class="deleted-comment">' + text + '</span>';
+            }
+          }
+        }
+        return text;
+      }
+
+      var parse = function(data) {
+        cursor = null;
+        var comments = [];
+        if (data && data.feed && data.feed.entry) {
+          for (var i = 0, entry; entry = data.feed.entry[i]; i++) {
+            var comment = {};
+            // comment ID, parsed out of the original id format
+            var id = /blog-(\d+).post-(\d+)/.exec(entry.id.$t);
+            comment.id = id ? id[2] : null;
+            comment.body = bodyFromEntry(entry);
+            comment.timestamp = Date.parse(entry.published.$t) + '';
+            if (entry.author && entry.author.constructor === Array) {
+              var auth = entry.author[0];
+              if (auth) {
+                comment.author = {
+                  name: (auth.name ? auth.name.$t : undefined),
+                  profileUrl: (auth.uri ? auth.uri.$t : undefined),
+                  avatarUrl: (auth.gd$image ? auth.gd$image.src : undefined)
+                };
+              }
+            }
+            if (entry.link) {
+              if (entry.link[2]) {
+                comment.link = comment.permalink = entry.link[2].href;
+              }
+              if (entry.link[3]) {
+                var pid = /.*comments\/default\/(\d+)\?.*/.exec(entry.link[3].href);
+                if (pid && pid[1]) {
+                  comment.parentId = pid[1];
+                }
+              }
+            }
+            comment.deleteclass = 'item-control blog-admin';
+            if (entry.gd$extendedProperty) {
+              for (var k in entry.gd$extendedProperty) {
+                if (entry.gd$extendedProperty[k].name == 'blogger.itemClass') {
+                  comment.deleteclass += ' ' + entry.gd$extendedProperty[k].value;
+                } else if (entry.gd$extendedProperty[k].name == 'blogger.displayTime') {
+                  comment.displayTime = entry.gd$extendedProperty[k].value;
+                }
+              }
+            }
+            comments.push(comment);
+          }
+        }
+        return comments;
+      };
+
+      var paginator = function(callback) {
+        if (hasMore()) {
+          var url = config.feed + '?alt=json&v=2&orderby=published&reverse=false&max-results=50';
+          if (cursor) {
+            url += '&published-min=' + new Date(cursor).toISOString();
+          }
+          window.bloggercomments = function(data) {
+            var parsed = parse(data);
+            cursor = parsed.length < 50 ? null
+                : parseInt(parsed[parsed.length - 1].timestamp) + 1
+            callback(parsed);
+            window.bloggercomments = null;
+          }
+          url += '&callback=bloggercomments';
+          var script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.src = url;
+          document.getElementsByTagName('head')[0].appendChild(script);
+        }
+      };
+      var hasMore = function() {
+        return !!cursor;
+      };
+      var getMeta = function(key, comment) {
+        if ('iswriter' == key) {
+          var matches = !!comment.author
+              && comment.author.name == config.authorName
+              && comment.author.profileUrl == config.authorUrl;
+          return matches ? 'true' : '';
+        } else if ('deletelink' == key) {
+          return config.baseUri + '/delete-comment.g?blogID='
+               + config.blogId + '&postID=' + comment.id;
+        } else if ('deleteclass' == key) {
+          return comment.deleteclass;
+        }
+        return '';
+      };
+
+      var replybox = null;
+      var replyUrlParts = null;
+      var replyParent = undefined;
+
+      var onReply = function(commentId, domId) {
+        if (replybox == null) {
+          // lazily cache replybox, and adjust to suit this style:
+          replybox = document.getElementById('comment-editor');
+          if (replybox != null) {
+            replybox.height = '250px';
+            replybox.style.display = 'block';
+            replyUrlParts = replybox.src.split('#');
+          }
+        }
+        if (replybox && (commentId !== replyParent)) {
+          replybox.src = '';
+          document.getElementById(domId).insertBefore(replybox, null);
+          replybox.src = replyUrlParts[0]
+              + (commentId ? '&parentID=' + commentId : '')
+              + '#' + replyUrlParts[1];
+          replyParent = commentId;
+        }
+      };
+
+      var hash = (window.location.hash || '#').substring(1);
+      var startThread, targetComment;
+      if (/^comment-form_/.test(hash)) {
+        startThread = hash.substring('comment-form_'.length);
+      } else if (/^c[0-9]+$/.test(hash)) {
+        targetComment = hash.substring(1);
+      }
+
+      // Configure commenting API:
+      var configJso = {
+        'maxDepth': config.maxThreadDepth
+      };
+      var provider = {
+        'id': config.postId,
+        'data': items,
+        'loadNext': paginator,
+        'hasMore': hasMore,
+        'getMeta': getMeta,
+        'onReply': onReply,
+        'rendered': true,
+        'initComment': targetComment,
+        'initReplyThread': startThread,
+        'config': configJso,
+        'messages': msgs
+      };
+
+      var render = function() {
+        if (window.goog && window.goog.comments) {
+          var holder = document.getElementById('comment-holder');
+          window.goog.comments.render(holder, provider);
+        }
+      };
+
+      // render now, or queue to render when library loads:
+      if (window.goog && window.goog.comments) {
+        render();
+      } else {
+        window.goog = window.goog || {};
+        window.goog.comments = window.goog.comments || {};
+        window.goog.comments.loadQueue = window.goog.comments.loadQueue || [];
+        window.goog.comments.loadQueue.push(render);
+      }
+    })();
+// ]]>
+  </script>
+<div id="comment-holder">
+<div class="comment-thread toplevel-thread"><ol id="top-ra"><li class="comment" id="c1279040069158873500"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blogger_logo_round_35.png" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/10078871452901284471" rel="nofollow">Unknown</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1522063832060#c1279040069158873500">Monday, March 26, 2018 at 7:30:00 AM EDT</a></span></div><p class="comment-content">Awesome article I really impress it’s very informative and useful.Thanks<br><br><a href="http://iphtechnologies.com.au/custom-software-development-sydney-melbourne-brisbane-australia/" rel="nofollow">Custom Software Development Sydney</a></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="1279040069158873500" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1825451696"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=1279040069158873500">Delete</a></span></span></div><div class="comment-replies"><div id="c1279040069158873500-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c1279040069158873500-ra" class="thread-chrome thread-expanded"><div></div><div id="c1279040069158873500-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="1279040069158873500" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c1279040069158873500-ce"></div></li><li class="comment" id="c95899959156962529"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="http://www.automationtraining.info/" rel="nofollow">PLC Training in Chennai</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1542622278654#c95899959156962529">Monday, November 19, 2018 at 5:11:00 AM EST</a></span></div><p class="comment-content">Thanks for sharing</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="95899959156962529" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=95899959156962529">Delete</a></span></span></div><div class="comment-replies"><div id="c95899959156962529-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c95899959156962529-ra" class="thread-chrome thread-expanded"><div></div><div id="c95899959156962529-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="95899959156962529" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c95899959156962529-ce"></div></li><li class="comment" id="c7443917289761350769"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user">Anonymous</cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1576960582499#c7443917289761350769">Saturday, December 21, 2019 at 3:36:00 PM EST</a></span></div><p class="comment-content">an initial level trainer for Napier Regular Higher education around Nashville, Tn. <a href="http://iyy183v0qk.dip.jp/" rel="nofollow">http://iyy183v0qk.dip.jp</a> <a href="https://imgur.com/a/SVX5ekK" rel="nofollow">https://imgur.com/a/SVX5ekK</a> <a href="https://imgur.com/a/rB96wpS" rel="nofollow">https://imgur.com/a/rB96wpS</a> <a href="https://imgur.com/a/xGtIWiE" rel="nofollow">https://imgur.com/a/xGtIWiE</a> <a href="https://imgur.com/a/m1ELzqp" rel="nofollow">https://imgur.com/a/m1ELzqp</a> <a href="http://t7iyzj2yu5.dip.jp/" rel="nofollow">http://t7iyzj2yu5.dip.jp</a> <a href="https://imgur.com/a/8OHOftw" rel="nofollow">https://imgur.com/a/8OHOftw</a></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="7443917289761350769" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=7443917289761350769">Delete</a></span></span></div><div class="comment-replies"><div id="c7443917289761350769-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c7443917289761350769-ra" class="thread-chrome thread-expanded"><div></div><div id="c7443917289761350769-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="7443917289761350769" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c7443917289761350769-ce"></div></li><li class="comment" id="c1693718035973323166"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blogger_logo_round_35.png" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/10277459433949163975" rel="nofollow">robert</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1601724466824#c1693718035973323166">Saturday, October 3, 2020 at 7:27:00 AM EDT</a></span></div><p class="comment-content">Great post.<br><a href="https://www.blogtalkradio.com/leopalmer" rel="nofollow">https://www.blogtalkradio.com/leopalmer</a><br></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="1693718035973323166" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-421521331"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=1693718035973323166">Delete</a></span></span></div><div class="comment-replies"><div id="c1693718035973323166-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c1693718035973323166-ra" class="thread-chrome thread-expanded"><div></div><div id="c1693718035973323166-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="1693718035973323166" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c1693718035973323166-ce"></div></li><li class="comment" id="c2799888238700829016"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blogger_logo_round_35.png" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/06265783600033761012" rel="nofollow">John</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1622126045626#c2799888238700829016">Thursday, May 27, 2021 at 10:34:00 AM EDT</a></span></div><p class="comment-content">This comment has been removed by the author.</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="2799888238700829016" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin "><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=2799888238700829016">Delete</a></span></span></div><div class="comment-replies"><div id="c2799888238700829016-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c2799888238700829016-ra" class="thread-chrome thread-expanded"><div></div><div id="c2799888238700829016-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="2799888238700829016" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c2799888238700829016-ce"></div></li><li class="comment" id="c704633164247677936"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blogger_logo_round_35.png" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/06265783600033761012" rel="nofollow">John</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1622126266386#c704633164247677936">Thursday, May 27, 2021 at 10:37:00 AM EDT</a></span></div><p class="comment-content">Great post<br> <br>https://speakerdeck.com/xfactor<br></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="704633164247677936" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-133844583"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=704633164247677936">Delete</a></span></span></div><div class="comment-replies"><div id="c704633164247677936-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c704633164247677936-ra" class="thread-chrome thread-expanded"><div></div><div id="c704633164247677936-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="704633164247677936" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c704633164247677936-ce"></div></li><li class="comment" id="c568456276204930089"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blogger_logo_round_35.png" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/16133468272448473560" rel="nofollow">tanuhealthdoctor</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1646386345691#c568456276204930089">Friday, March 4, 2022 at 4:32:00 AM EST</a></span></div><p class="comment-content">Hi, constantly i used to check website posts here early in the daylight,<br><a href="https://ahealthtutor.com/julia-vins/" rel="nofollow">see here</a><br></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="568456276204930089" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-173260094"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=568456276204930089">Delete</a></span></span></div><div class="comment-replies"><div id="c568456276204930089-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c568456276204930089-ra" class="thread-chrome thread-expanded"><div></div><div id="c568456276204930089-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="568456276204930089" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c568456276204930089-ce"></div></li><li class="comment" id="c5937331655516127218"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blogger_logo_round_35.png" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/12468648594218939447" rel="nofollow">Miller Maxwel</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1649316982603#c5937331655516127218">Thursday, April 7, 2022 at 3:36:00 AM EDT</a></span></div><p class="comment-content">This is the one of the most important information for me. And I am feeling glad reading your article. The article is really excellent ?<br><br><a href="https://www.timetableresults.com/bsc-result/" rel="nofollow">BSC Result 2022 - B.SC 1st 2nd 3rd Year Exam Result</a><br><a href="https://www.timetableresults.com/bsc-1st-year-result/" rel="nofollow">B.SC 1st Year Result 2022</a> | <a href="https://www.timetableresults.com/bsc-2nd-year-result/" rel="nofollow">B.SC 2nd Year Result 2022</a> | <a href="https://www.timetableresults.com/bsc-3rd-year-result/" rel="nofollow">B.SC 3rd Year Result 2022</a>.</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="5937331655516127218" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-604644625"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=5937331655516127218">Delete</a></span></span></div><div class="comment-replies"><div id="c5937331655516127218-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c5937331655516127218-ra" class="thread-chrome thread-expanded"><div></div><div id="c5937331655516127218-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="5937331655516127218" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c5937331655516127218-ce"></div></li><li class="comment" id="c7320778084997924493"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.timetableresults.com/ba-time-table/" rel="nofollow">BA Time Table 2021 - B.A 1st 2nd 3rd Year Exam Date Sheet</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1651202199488#c7320778084997924493">Thursday, April 28, 2022 at 11:16:00 PM EDT</a></span></div><p class="comment-content">Keep up the great work! You recognize a lot of people are searching around for this info, you could help them greatly.<br><br><a href="https://www.timetableresults.com/ba-result/" rel="nofollow">BA Result 2021 - B.A 1st 2nd 3rd Year Exam Result</a></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="7320778084997924493" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=7320778084997924493">Delete</a></span></span></div><div class="comment-replies"><div id="c7320778084997924493-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c7320778084997924493-ra" class="thread-chrome thread-expanded"><div></div><div id="c7320778084997924493-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="7320778084997924493" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c7320778084997924493-ce"></div></li><li class="comment" id="c1765613996438799267"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user">Anonymous</cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1670586106650#c1765613996438799267">Friday, December 9, 2022 at 6:41:00 AM EST</a></span></div><p class="comment-content">We have already heard about <a href="https://www.apostrophechecker.com/" rel="nofollow">apostrophe checkers soft</a> that is able to check and correct a text of any size in a matter of seconds, and doing everything so well that the work cannot be distinguished from the texts of professional copywriters! You should definitely look at here now and discover this online tool. The result will definitely please you!</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="1765613996438799267" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=1765613996438799267">Delete</a></span></span></div><div class="comment-replies"><div id="c1765613996438799267-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c1765613996438799267-ra" class="thread-chrome thread-expanded"><div></div><div id="c1765613996438799267-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="1765613996438799267" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c1765613996438799267-ce"></div></li><li class="comment" id="c5607122018542577336"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blogger_logo_round_35.png" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/01110439099104221176" rel="nofollow">Unknown</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1670780752596#c5607122018542577336">Sunday, December 11, 2022 at 12:45:00 PM EST</a></span></div><p class="comment-content">Good evening everyone, I have found a very useful website. I recently tried to <a href="https://www.correctthesentence.com/" rel="nofollow">correct my sentence for free online</a> and this site really helped me and saved a lot of time. In seconds I was able to check and correct my text for free. It's so convenient! I recommend this site to you too! Fast, easy and high quality, try it! </p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="5607122018542577336" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1232465280"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=5607122018542577336">Delete</a></span></span></div><div class="comment-replies"><div id="c5607122018542577336-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c5607122018542577336-ra" class="thread-chrome thread-expanded"><div></div><div id="c5607122018542577336-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="5607122018542577336" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c5607122018542577336-ce"></div></li><li class="comment" id="c2989483335617581102"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user">Anonymous</cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1670782227684#c2989483335617581102">Sunday, December 11, 2022 at 1:10:00 PM EST</a></span></div><p class="comment-content">Are you a writer or a student? Do you need a beautiful and error-free text? Then you should definitely visit this site! By clicking on this link you get to a high-quality and most importantly free! You need to insert your text into the corrector line and get the text ready! <a href="https://www.paragraphcorrector.com/improve-persuasive-writing-skills-with-paragraph-changer-online/" rel="nofollow">look at here now</a></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="2989483335617581102" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=2989483335617581102">Delete</a></span></span></div><div class="comment-replies"><div id="c2989483335617581102-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c2989483335617581102-ra" class="thread-chrome thread-expanded"><div></div><div id="c2989483335617581102-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="2989483335617581102" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c2989483335617581102-ce"></div></li><li class="comment" id="c657220099936548330"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user">Anonymous</cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1672174636011#c657220099936548330">Tuesday, December 27, 2022 at 3:57:00 PM EST</a></span></div><p class="comment-content">If you want to correctly express thoughts in English, then you should first of all deal with the active and passive voice and in what cases you need to use them. <a href="https://www.passivesentencechecker.com/" rel="nofollow">Active voice checker free app</a> will help you with this, and if you are wrong, it will quickly find the error and fix it. </p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="657220099936548330" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=657220099936548330">Delete</a></span></span></div><div class="comment-replies"><div id="c657220099936548330-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c657220099936548330-ra" class="thread-chrome thread-expanded"><div></div><div id="c657220099936548330-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="657220099936548330" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c657220099936548330-ce"></div></li><li class="comment" id="c5392168145897685731"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blogger_logo_round_35.png" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/01081115517235613033" rel="nofollow">GoLogica</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1688992890265#c5392168145897685731">Monday, July 10, 2023 at 8:41:00 AM EDT</a></span></div><p class="comment-content">Here is sharing some data analytics RSA Archer Interview Questions and Answers overview concepts may be its helpful to you.<br><br><a href="https://www.gologica.com/elearning/rsa-archer-interview-questions-and-answers/" rel="nofollow">RSA Archer Interview Questions and Answers</a><br></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="5392168145897685731" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-491282693"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=5392168145897685731">Delete</a></span></span></div><div class="comment-replies"><div id="c5392168145897685731-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c5392168145897685731-ra" class="thread-chrome thread-expanded"><div></div><div id="c5392168145897685731-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="5392168145897685731" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c5392168145897685731-ce"></div></li><li class="comment" id="c6428828877368977745"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user">Hazar21</cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1696034862894#c6428828877368977745">Friday, September 29, 2023 at 8:47:00 PM EDT</a></span></div><p class="comment-content"><a href="https://bayanlarsitesi.com/erzurum-escort/" rel="nofollow">Erzurum</a><br><a href="https://bayanlarsitesi.com/istanbul-escort/" rel="nofollow">istanbul</a><br><a href="https://bayanlarsitesi.com/agri-escort/" rel="nofollow">Ağrı</a><br><a href="https://bayanlarsitesi.com/malatya-escort/" rel="nofollow">Malatya</a><br><a href="https://bayanlarsitesi.com/trabzon-escort/" rel="nofollow">Trabzon</a><br>İWQ</p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="6428828877368977745" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=6428828877368977745">Delete</a></span></span></div><div class="comment-replies"><div id="c6428828877368977745-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c6428828877368977745-ra" class="thread-chrome thread-expanded"><div></div><div id="c6428828877368977745-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="6428828877368977745" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c6428828877368977745-ce"></div></li><li class="comment" id="c1322455250053312190"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.themoviefashion.com/product-category/halloween-shop/" rel="nofollow">Halloween Costume</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1696412900271#c1322455250053312190">Wednesday, October 4, 2023 at 5:48:00 AM EDT</a></span></div><p class="comment-content">You ought to make a few additional locale like this. Nice article. <a href="https://www.themoviefashion.com/product-category/halloween-shop/" rel="nofollow">Halloween Costume</a></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="1322455250053312190" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=1322455250053312190">Delete</a></span></span></div><div class="comment-replies"><div id="c1322455250053312190-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c1322455250053312190-ra" class="thread-chrome thread-expanded"><div></div><div id="c1322455250053312190-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="1322455250053312190" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c1322455250053312190-ce"></div></li><li class="comment" id="c9050993804932255351"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user">5B606WilsonF6C50</cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1699681719897#c9050993804932255351">Saturday, November 11, 2023 at 12:48:00 AM EST</a></span></div><p class="comment-content">FDA53<br><a href="https://bit.ly/sirnak-sehir-ici-nakliyat" rel="nofollow">Şırnak Şehir İçi Nakliyat</a><br><a href="https://bit.ly/silivri-boya-ustasi" rel="nofollow">Silivri Boya Ustası</a><br><a href="https://bit.ly/karapurcek-parke-ustasi" rel="nofollow">Karapürçek Parke Ustası</a><br><a href="https://bit.ly/elazig-evden-eve-nakliyat" rel="nofollow">Elazığ Evden Eve Nakliyat</a><br><a href="https://bit.ly/cerkezkoy-marangoz" rel="nofollow">Çerkezköy Marangoz</a><br><a href="https://bit.ly/canakkale-sehirler-arasi-nakliyat" rel="nofollow">Çanakkale Şehirler Arası Nakliyat</a><br><a href="https://bit.ly/rize-lojistik" rel="nofollow">Rize Lojistik</a><br><a href="https://bit.ly/tunceli-sehir-ici-nakliyat" rel="nofollow">Tunceli Şehir İçi Nakliyat</a><br><a href="https://bit.ly/yenimahalle-boya-ustasi" rel="nofollow">Yenimahalle Boya Ustası</a><br></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="9050993804932255351" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=9050993804932255351">Delete</a></span></span></div><div class="comment-replies"><div id="c9050993804932255351-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c9050993804932255351-ra" class="thread-chrome thread-expanded"><div></div><div id="c9050993804932255351-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="9050993804932255351" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c9050993804932255351-ce"></div></li><li class="comment" id="c6409252364766620933"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user">74775Gene1155C</cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1700226667436#c6409252364766620933">Friday, November 17, 2023 at 8:11:00 AM EST</a></span></div><p class="comment-content">CB252<br><a href="https://bit.ly/deca-durabolin-buy-nandrolone-deca-durabolin-order-deca-durabolin-for-sale" rel="nofollow">order deca durabolin</a><br><a href="https://bit.ly/cerkezkoy-cam-balkon" rel="nofollow">Çerkezköy Cam Balkon</a><br><a href="https://bit.ly/ankara-evden-eve-nakliyat-" rel="nofollow">Ankara Evden Eve Nakliyat</a><br><a href="https://bit.ly/parabolan-buy-parabolan-order-parabolan-for-sale" rel="nofollow">order parabolan</a><br><a href="https://bit.ly/cerkezkoy-cati-ustasi-2" rel="nofollow">Çerkezköy Çatı Ustası</a><br><a href="https://bit.ly/isparta-evden-eve-nakliyat" rel="nofollow">Isparta Evden Eve Nakliyat</a><br><a href="https://bit.ly/deca-durabolin-buy-nandrolone-deca-durabolin-order-deca-durabolin-for-sale" rel="nofollow">buy deca durabolin</a><br><a href="https://bit.ly/fat-burner-buy-fat-burner-order-fat-burner-for-sale" rel="nofollow">buy fat burner</a><br><a href="https://bit.ly/yozgat-evden-eve-nakliyat" rel="nofollow">Yozgat Evden Eve Nakliyat</a><br></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="6409252364766620933" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=6409252364766620933">Delete</a></span></span></div><div class="comment-replies"><div id="c6409252364766620933-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c6409252364766620933-ra" class="thread-chrome thread-expanded"><div></div><div id="c6409252364766620933-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="6409252364766620933" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c6409252364766620933-ce"></div></li><li class="comment" id="c4506477434956248586"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user">5718AKellyD3FC9</cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1700373130900#c4506477434956248586">Sunday, November 19, 2023 at 12:52:00 AM EST</a></span></div><p class="comment-content">D58AB<br><a href="https://bit.ly/corum-lojistik" rel="nofollow">Çorum Lojistik</a><br><a href="https://bit.ly/omlira-coin-hangi-borsada" rel="nofollow">Omlira Coin Hangi Borsada</a><br><a href="https://bit.ly/rize-sehir-ici-nakliyat" rel="nofollow">Rize Şehir İçi Nakliyat</a><br><a href="https://bit.ly/samsun-sehir-ici-nakliyat" rel="nofollow">Samsun Şehir İçi Nakliyat</a><br><a href="https://bit.ly/tekirdag-fayans-ustasi" rel="nofollow">Tekirdağ Fayans Ustası</a><br><a href="https://bit.ly/erzincan-lojistik" rel="nofollow">Erzincan Lojistik</a><br><a href="https://bit.ly/meta-coin-hangi-borsada" rel="nofollow">Meta Coin Hangi Borsada</a><br><a href="https://bit.ly/samsun-evden-eve-nakliyat" rel="nofollow">Samsun Evden Eve Nakliyat</a><br><a href="https://bit.ly/mus-evden-eve-nakliyat" rel="nofollow">Muş Evden Eve Nakliyat</a><br></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="4506477434956248586" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=4506477434956248586">Delete</a></span></span></div><div class="comment-replies"><div id="c4506477434956248586-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c4506477434956248586-ra" class="thread-chrome thread-expanded"><div></div><div id="c4506477434956248586-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="4506477434956248586" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c4506477434956248586-ce"></div></li><li class="comment" id="c7564861512390988206"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blogger_logo_round_35.png" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user"><a href="https://www.blogger.com/profile/07070533262741203131" rel="nofollow">Neelesh</a></cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1701347151383#c7564861512390988206">Thursday, November 30, 2023 at 7:25:00 AM EST</a></span></div><p class="comment-content">Thanks for sharing this informative blog.<br><a href="https://www.peakpointooty.com/contact-us/" rel="nofollow">Team outing resorts in Ooty</a></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="7564861512390988206" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-2017317417"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=7564861512390988206">Delete</a></span></span></div><div class="comment-replies"><div id="c7564861512390988206-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c7564861512390988206-ra" class="thread-chrome thread-expanded"><div></div><div id="c7564861512390988206-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="7564861512390988206" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c7564861512390988206-ce"></div></li><li class="comment" id="c4087148851810248574"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user">46721Brenda82198</cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1703113136981#c4087148851810248574">Wednesday, December 20, 2023 at 5:58:00 PM EST</a></span></div><p class="comment-content">078C2<br><a href="https://twitter.com/nanytoosohbet" rel="nofollow">canli sohbet bedava</a><br><a href="https://dostca.com/duzce-sohbet-odalari-sesli-goruntulu-canli-mobil-sohbet-siteleri/" rel="nofollow">düzce ücretsiz görüntülü sohbet</a><br><a href="https://sites.google.com/view/karssohbet/" rel="nofollow">kars görüntülü sohbet siteleri ücretsiz</a><br><a href="https://sites.google.com/view/kirsehirsohbet/" rel="nofollow">kırşehir telefonda kadınlarla sohbet</a><br><a href="https://sites.google.com/view/corumsohbet/" rel="nofollow">çorum ücretsiz sohbet uygulaması</a><br><a href="https://sites.google.com/view/diyarbakirsohbet/" rel="nofollow">diyarbakır nanytoo sohbet</a><br><a href="https://dostca.com/nigde-sohbet-odalari-sesli-goruntulu-canli-mobil-sohbet-siteleri/" rel="nofollow">niğde mobil sesli sohbet</a><br><a href="https://dostca.com/zonguldak-sohbet-odalari-sesli-goruntulu-canli-mobil-sohbet-siteleri/" rel="nofollow">zonguldak goruntulu sohbet</a><br><a href="https://sites.google.com/view/istanbulsohbet/" rel="nofollow">istanbul sesli sohbet sesli chat</a><br></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="4087148851810248574" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=4087148851810248574">Delete</a></span></span></div><div class="comment-replies"><div id="c4087148851810248574-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c4087148851810248574-ra" class="thread-chrome thread-expanded"><div></div><div id="c4087148851810248574-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="4087148851810248574" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c4087148851810248574-ce"></div></li><li class="comment" id="c7985000998183978130"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user">C4F76Nylah26D10</cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1703313937709#c7985000998183978130">Saturday, December 23, 2023 at 1:45:00 AM EST</a></span></div><p class="comment-content">0D429<br><a href="https://sites.google.com/view/manisasohbet/" rel="nofollow">manisa yabancı görüntülü sohbet siteleri</a><br><a href="https://sites.google.com/view/nanytoosohbet/" rel="nofollow">kadınlarla sohbet et</a><br><a href="https://medium.com/@nanytoosohbet/nanytoo-sohbet-sesli-g%C3%B6r%C3%BCnt%C3%BCl%C3%BC-rastgele-canl%C4%B1-mobil-chat-b1ac082cdb18" rel="nofollow">sesli sohbet odası</a><br><a href="https://dostca.com/adiyaman-sohbet-odalari-sesli-goruntulu-canli-mobil-sohbet-siteleri/" rel="nofollow">adıyaman rastgele sohbet odaları</a><br><a href="https://sites.google.com/view/elazigsohbet/" rel="nofollow">elazığ ücretsiz sohbet</a><br><a href="https://sites.google.com/view/artvinsohbet/" rel="nofollow">artvin mobil sohbet</a><br><a href="https://sites.google.com/view/sohbetmalatya/" rel="nofollow">malatya yabancı görüntülü sohbet uygulamaları</a><br><a href="https://sites.google.com/view/nanytoosohbet/" rel="nofollow">mobil sohbet</a><br><a href="https://dostca.com/samsun-sohbet-odalari-sesli-goruntulu-canli-mobil-sohbet-siteleri/" rel="nofollow">samsun mobil sohbet bedava</a><br></p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="7985000998183978130" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=7985000998183978130">Delete</a></span></span></div><div class="comment-replies"><div id="c7985000998183978130-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c7985000998183978130-ra" class="thread-chrome thread-expanded"><div></div><div id="c7985000998183978130-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="7985000998183978130" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c7985000998183978130-ce"></div></li><li class="comment" id="c3898965399978112543"><div class="avatar-image-container"><img src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/blank.gif" alt=""></div><div class="comment-block"><div class="comment-header"><cite class="user">Anonymous</cite><span class="icon user "></span><span class="datetime secondary-text"><a rel="nofollow" href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html?showComment=1705731286719#c3898965399978112543">Saturday, January 20, 2024 at 1:14:00 AM EST</a></span></div><p class="comment-content">hi bro how to setup jenkins red packages offline </p><span class="comment-actions secondary-text"><a class="comment-reply" target="_self" data-comment-id="3898965399978112543" href="javascript:;">Reply</a><span class="item-control blog-admin blog-admin pid-1718772192"><a target="_self" href="https://www.blogger.com/delete-comment.g?blogID=18313336&amp;postID=3898965399978112543">Delete</a></span></span></div><div class="comment-replies"><div id="c3898965399978112543-rt" class="comment-thread inline-thread hidden"><span class="thread-toggle thread-expanded"><span class="thread-arrow"></span><span class="thread-count"><a target="_self" href="javascript:;">Replies</a></span></span><ol id="c3898965399978112543-ra" class="thread-chrome thread-expanded"><div></div><div id="c3898965399978112543-continue" class="continue"><a class="comment-reply" target="_self" data-comment-id="3898965399978112543" href="javascript:;">Reply</a></div></ol></div></div><div class="comment-replybox-single" id="c3898965399978112543-ce"></div></li></ol><div id="top-continue" class="continue hidden"><a class="comment-reply" target="_self" href="javascript:;">Add comment</a></div><div class="comment-replybox-thread" id="top-ce"><iframe allowtransparency="true" class="blogger-iframe-colorize blogger-comment-from-post" frameborder="0" height="66px" id="comment-editor" name="comment-editor" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/18313336.html" width="100%" style="display: block;" data-resized="true"></iframe></div><div class="loadmore hidden" data-post-id="1822065214754061298"><a target="_self">Load more...</a></div></div>
+</div>
+</div>
+<p class="comment-footer">
+</p><div class="comment-form">
+<a name="comment-form"></a>
+<p>
+</p>
+<a href="https://www.blogger.com/comment/frame/18313336?po=1822065214754061298&amp;hl=en&amp;blogspotRpcToken=398713" id="comment-editor-src"></a>
+
+<script src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/4235886812-comment_from_post_iframe.js" type="text/javascript"></script>
+<script type="text/javascript">
+      BLOG_CMT_createIframe('https://www.blogger.com/rpc_relay.html');
+    </script>
+</div>
+<p></p>
+<div id="backlinks-container">
+<div id="Blog1_backlinks-container">
+</div>
+</div>
+</div>
+</div>
+<div class="inline-ad">
+</div>
+
+        </div></div>
+      
+</div>
+<div class="blog-pager" id="blog-pager">
+<span id="blog-pager-newer-link">
+<a class="blog-pager-newer-link" href="https://java-x.blogspot.com/2017/10/deploy-java-web-application-on-heroku.html" id="Blog1_blog-pager-newer-link" title="Newer Post">Newer Post</a>
+</span>
+<span id="blog-pager-older-link">
+<a class="blog-pager-older-link" href="https://java-x.blogspot.com/2017/10/build-git-from-source-code-on-red-hat.html" id="Blog1_blog-pager-older-link" title="Older Post">Older Post</a>
+</span>
+<a class="home-link" href="https://java-x.blogspot.com/">Home</a>
+</div>
+<div class="clear"></div>
+<div class="post-feeds">
+<div class="feed-links">
+Subscribe to:
+<a class="feed-link" href="https://java-x.blogspot.com/feeds/1822065214754061298/comments/default" target="_blank" type="application/atom+xml">Post Comments (Atom)</a>
+</div>
+</div>
+</div><div class="widget HTML" data-version="1" id="HTML4">
+<div class="widget-content">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-346891-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/platform.js" async="" defer="" gapi_processed="true"></script>
+
+<div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '1866890130195511',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v2.10'
+    });
+    FB.AppEvents.logPageView();
+    FB.Event.subscribe('edge.create', function(url) {ga('send', 'social', 'facebook', 'like', url);});
+    FB.Event.subscribe('edge.remove', function(url) {ga('send', 'social', 'facebook', 'unlike', url);});
+
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-like fb_iframe_widget" data-href="https://java-x.blogspot.com/" data-layout="button" data-action="like" data-size="small" data-show-faces="true" data-share="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=1866890130195511&amp;container_width=822&amp;href=https%3A%2F%2Fjava-x.blogspot.com%2F&amp;layout=button&amp;locale=en_US&amp;sdk=joey&amp;share=true&amp;show_faces=true&amp;size=small"><span style="vertical-align: bottom; width: 120px; height: 28px;"><iframe name="f202eaa96eac12" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/like.html" style="border: none; visibility: visible; width: 120px; height: 28px;" class=""></iframe></span></div>
+</div>
+<div class="clear"></div>
+</div><div class="widget HTML" data-version="1" id="HTML6">
+<div class="widget-content">
+<script async="" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/f(3).txt"></script>
+<!-- BlogMainBottom -->
+<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-3721999749064364" data-ad-slot="6444524745" data-adsbygoogle-status="done"><div id="aswift_1_host" style="border: none; height: 90px; width: 728px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"></div></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<div class="clear"></div>
+</div><div class="widget PopularPosts" data-version="1" id="PopularPosts1">
+<h2>Popular Posts</h2>
+<div class="widget-content popular-posts">
+<ul>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="https://java-x.blogspot.com/2006/12/implementing-jms-with-spring-message.html">Implementing JMS with Spring: Message Driven POJO</a></div>
+<div class="item-snippet">The previous post described how to implement a JMS messaging client using Spring JMS . This post will describe how to implement the Message ...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="https://java-x.blogspot.com/2006/12/using-quartz-scheduler-in-cluster.html">Using Quartz Scheduler in a cluster</a></div>
+<div class="item-snippet">In a previous post, I described how to use Quartz scheduler for scheduling . In this post, I describe the configuration changes required for...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="https://java-x.blogspot.com/2017/10/deploy-java-web-application-on-heroku.html">Deploy Java Web Application on Heroku with Heroku CLI</a></div>
+<div class="item-snippet">This post will describe how to create and deploy a Java Web Application war to Heroku using Heroku CLI. You will need a basic understanding ...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="https://java-x.blogspot.com/2007/01/unit-testing-with-junit-40.html">Unit Testing with JUnit 4.0</a></div>
+<div class="item-snippet">JUnit 4  introduces a completely different API to the older versions. JUnit 4 uses Java 5 annotations  to describe tests instead of using in...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="https://java-x.blogspot.com/2006/11/merge-pdf-files-with-itext.html">Merge PDF files with iText</a></div>
+<div class="item-snippet">New posts with iText 5.5.12 Following are two new posts for PDF Merge with iText 5.5.12 Merge PDF files using iText 5 Merge and Paginate PDF...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="https://java-x.blogspot.com/2006/05/double-dispatch-in-java.html">Double dispatch in Java</a></div>
+<div class="item-snippet">Some programming languages provide the feature of dispatching a funtion call to different concrete functions depending on the runtime types ...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="https://java-x.blogspot.com/2006/11/pagination-with-displaytag.html">Pagination with DisplayTag</a></div>
+<div class="item-snippet">Displaytag  is an opensource tag library that can be used to display tables on JSPs. Apart from being able to display tables, the displaytag...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html">Jenkins Offline Install on Red Hat Enterprise Linux Server</a></div>
+<div class="item-snippet">In this post we will see how to do an offline install Jenkins and required plugins on a Red Hat Enterprise Linux Server release 7.3. This is...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="https://java-x.blogspot.com/2017/09/merge-and-paginate-pdf-files-using.html">Merge and Paginate PDF files using iText 5</a></div>
+<div class="item-snippet">In this post we will see a way to merge multiple PDF files while adding page numbers at the bottom of each page in the format Page 1 of 10 ....</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="https://java-x.blogspot.com/2006/12/pdf-generation-with-big-faceless-report.html">PDF Generation with Big Faceless Report Generator</a></div>
+<div class="item-snippet">Big Faceless Report Generator  is a commercial Java API for generating PDF files from XML input . The report generator is built on the Big F...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+</ul>
+<div class="clear"></div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="column-left-outer">
+<div class="column-left-inner">
+<aside>
+</aside>
+</div>
+</div>
+<div class="column-right-outer">
+<div class="column-right-inner">
+<aside>
+<div class="sidebar section" id="sidebar-right-1"><div class="widget HTML" data-version="1" id="HTML2">
+<div class="widget-content">
+<script async="" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/f(3).txt"></script>
+<!-- BlogSidebar1 -->
+<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-3721999749064364" data-ad-slot="4194777681" data-adsbygoogle-status="done" data-ad-status="filled"><div id="aswift_2_host" style="border: none; height: 280px; width: 336px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;" tabindex="0" title="Advertisement" aria-label="Advertisement"><iframe id="aswift_2" name="aswift_2" browsingtopics="true" style="left:0;position:absolute;top:0;border:0;width:336px;height:280px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="336" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/ads(1).html" data-google-container-id="a!3" data-google-query-id="CI_KjN-564MDFexgDwIduL4Ihg" data-load-complete="true"></iframe></div></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<div class="clear"></div>
+</div><div class="widget HTML" data-version="1" id="HTML1">
+<h2 class="title">Java Search</h2>
+<div class="widget-content">
+<script>(function() {
+    var cx = '000126560404039071222:iyoh5gjdv5c';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script><div id="___gcse_0"><div class="gsc-control-searchbox-only gsc-control-searchbox-only-en" dir="ltr"><form class="gsc-search-box gsc-search-box-tools" accept-charset="utf-8"><table cellspacing="0" cellpadding="0" role="presentation" class="gsc-search-box"><tbody><tr><td class="gsc-input"><div class="gsc-input-box" id="gsc-iw-id1"><table cellspacing="0" cellpadding="0" role="presentation" id="gs_id50" class="gstl_50 gsc-input" style="width: 100%; padding: 0px;"><tbody><tr><td id="gs_tti50" class="gsib_a"><input autocomplete="off" type="text" size="10" class="gsc-input" name="search" title="search" aria-label="search" id="gsc-i-id1" dir="ltr" spellcheck="false" style="width: 100%; padding: 0px; border: none; margin: 0px; height: auto; background: url(&quot;https://www.google.com/cse/static/images/1x/en/branding.png&quot;) left center no-repeat rgb(255, 255, 255); outline: none;"></td><td class="gsib_b"><div class="gsst_b" id="gs_st50" dir="ltr"><a class="gsst_a" href="javascript:void(0)" title="Clear search box" role="button" style="display: none;"><span class="gscb_a" id="gs_cb50" aria-hidden="true">×</span></a></div></td></tr></tbody></table></div></td><td class="gsc-search-button"><button class="gsc-search-button gsc-search-button-v2"><svg width="13" height="13" viewBox="0 0 13 13"><title>search</title><path d="m4.8495 7.8226c0.82666 0 1.5262-0.29146 2.0985-0.87438 0.57232-0.58292 0.86378-1.2877 0.87438-2.1144 0.010599-0.82666-0.28086-1.5262-0.87438-2.0985-0.59352-0.57232-1.293-0.86378-2.0985-0.87438-0.8055-0.010599-1.5103 0.28086-2.1144 0.87438-0.60414 0.59352-0.8956 1.293-0.87438 2.0985 0.021197 0.8055 0.31266 1.5103 0.87438 2.1144 0.56172 0.60414 1.2665 0.8956 2.1144 0.87438zm4.4695 0.2115 3.681 3.6819-1.259 1.284-3.6817-3.7 0.0019784-0.69479-0.090043-0.098846c-0.87973 0.76087-1.92 1.1413-3.1207 1.1413-1.3553 0-2.5025-0.46363-3.4417-1.3909s-1.4088-2.0686-1.4088-3.4239c0-1.3553 0.4696-2.4966 1.4088-3.4239 0.9392-0.92727 2.0864-1.3969 3.4417-1.4088 1.3553-0.011889 2.4906 0.45771 3.406 1.4088 0.9154 0.95107 1.379 2.0924 1.3909 3.4239 0 1.2126-0.38043 2.2588-1.1413 3.1385l0.098834 0.090049z"></path></svg></button></td><td class="gsc-clear-button"><div class="gsc-clear-button" title="clear results">&nbsp;</div></td></tr></tbody></table></form></div></div>
+</div>
+<div class="clear"></div>
+</div><div class="widget Label" data-version="1" id="Label1">
+<h2>Categories</h2>
+<div class="widget-content cloud-label-widget-content">
+<span class="label-size label-size-3">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/ajax">ajax</a>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/aop">aop</a>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/authentication">authentication</a>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/batch">batch</a>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/build">build</a>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/caching">caching</a>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/charts">charts</a>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/code%20quality">code quality</a>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/concurrency">concurrency</a>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/flex">flex</a>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/Guice">Guice</a>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/hibernate">hibernate</a>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/how-to">how-to</a>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/ide">ide</a>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/Java%20EE%205">Java EE 5</a>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/Java%20EE%206">Java EE 6</a>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/javascript">javascript</a>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/JAX-WS">JAX-WS</a>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/messaging">messaging</a>
+</span>
+<span class="label-size label-size-5">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/news">news</a>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/nio">nio</a>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/oracle">oracle</a>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/patterns">patterns</a>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/pdf">pdf</a>
+</span>
+<span class="label-size label-size-5">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/persistence">persistence</a>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/REST">REST</a>
+</span>
+<span class="label-size label-size-5">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/security">security</a>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/servlet3">servlet3</a>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/spring">spring</a>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/struts">struts</a>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/testing">testing</a>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/tips">tips</a>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/web%20services">web services</a>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/weblogic">weblogic</a>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/websphere">websphere</a>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="https://java-x.blogspot.com/search/label/xml">xml</a>
+</span>
+<div class="clear"></div>
+</div>
+</div><div class="widget HTML" data-version="1" id="HTML3">
+<div class="widget-content">
+<script async="" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/f(3).txt"></script>
+<!-- BlogSidebar2 -->
+<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-3721999749064364" data-ad-slot="3231860436" data-adsbygoogle-status="done" data-ad-status="filled"><div id="aswift_3_host" style="border: none; height: 280px; width: 336px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;" tabindex="0" title="Advertisement" aria-label="Advertisement"><iframe id="aswift_3" name="aswift_3" browsingtopics="true" style="left:0;position:absolute;top:0;border:0;width:336px;height:280px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="336" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/ads(2).html" data-google-container-id="a!4" data-google-query-id="CJ7bjN-564MDFXtKDwIdI3EH9Q" data-load-complete="true"></iframe></div></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<div class="clear"></div>
+</div><div class="widget BlogArchive" data-version="1" id="BlogArchive1">
+<h2>Blog Archive</h2>
+<div class="widget-content">
+<div id="ArchiveList">
+<div id="BlogArchive1_ArchiveList">
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy toggle-open">
+
+        ▼&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2017/">
+2017
+</a>
+<span class="post-count" dir="ltr">(35)</span>
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy toggle-open">
+
+        ▼&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2017/10/">
+October
+</a>
+<span class="post-count" dir="ltr">(8)</span>
+<ul class="posts">
+<li><a href="https://java-x.blogspot.com/2017/10/deploy-java-web-application-on-heroku.html">Deploy Java Web Application on Heroku with Heroku CLI</a></li>
+<li><a href="https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html">Jenkins Offline Install on Red Hat Enterprise Linu...</a></li>
+<li><a href="https://java-x.blogspot.com/2017/10/build-git-from-source-code-on-red-hat.html">Build Git From Source Code on Red Hat Enterprise L...</a></li>
+<li><a href="https://java-x.blogspot.com/2017/10/weblogic-remote-deploy-from-red-hat.html">Weblogic Remote Deploy from Red Hat Enterprise Lin...</a></li>
+<li><a href="https://java-x.blogspot.com/2017/10/java-9-reactive-programming-with-flow.html">Java 9: Reactive programming with Flow API</a></li>
+<li><a href="https://java-x.blogspot.com/2017/10/java-9-private-interface-methods.html">Java 9 : Private interface methods</a></li>
+<li><a href="https://java-x.blogspot.com/2017/10/java-8-interfaces-default-and-static.html">Java 8 Interfaces: default and static methods</a></li>
+<li><a href="https://java-x.blogspot.com/2017/10/java-9-date-time-api-changes.html">Java 9 Date Time API Changes</a></li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2017/09/">
+September
+</a>
+<span class="post-count" dir="ltr">(17)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2017/08/">
+August
+</a>
+<span class="post-count" dir="ltr">(5)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2017/07/">
+July
+</a>
+<span class="post-count" dir="ltr">(5)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2012/">
+2012
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2012/07/">
+July
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2011/">
+2011
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2011/03/">
+March
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2010/">
+2010
+</a>
+<span class="post-count" dir="ltr">(2)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2010/08/">
+August
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2010/07/">
+July
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2009/">
+2009
+</a>
+<span class="post-count" dir="ltr">(4)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2009/07/">
+July
+</a>
+<span class="post-count" dir="ltr">(3)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2009/03/">
+March
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2008/">
+2008
+</a>
+<span class="post-count" dir="ltr">(12)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2008/10/">
+October
+</a>
+<span class="post-count" dir="ltr">(2)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2008/07/">
+July
+</a>
+<span class="post-count" dir="ltr">(4)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2008/04/">
+April
+</a>
+<span class="post-count" dir="ltr">(5)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2008/03/">
+March
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2007/">
+2007
+</a>
+<span class="post-count" dir="ltr">(30)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2007/08/">
+August
+</a>
+<span class="post-count" dir="ltr">(2)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2007/05/">
+May
+</a>
+<span class="post-count" dir="ltr">(3)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2007/04/">
+April
+</a>
+<span class="post-count" dir="ltr">(3)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2007/03/">
+March
+</a>
+<span class="post-count" dir="ltr">(5)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2007/02/">
+February
+</a>
+<span class="post-count" dir="ltr">(3)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2007/01/">
+January
+</a>
+<span class="post-count" dir="ltr">(14)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/">
+2006
+</a>
+<span class="post-count" dir="ltr">(138)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/12/">
+December
+</a>
+<span class="post-count" dir="ltr">(26)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/11/">
+November
+</a>
+<span class="post-count" dir="ltr">(30)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/10/">
+October
+</a>
+<span class="post-count" dir="ltr">(10)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/09/">
+September
+</a>
+<span class="post-count" dir="ltr">(5)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/08/">
+August
+</a>
+<span class="post-count" dir="ltr">(10)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/07/">
+July
+</a>
+<span class="post-count" dir="ltr">(11)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/06/">
+June
+</a>
+<span class="post-count" dir="ltr">(2)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/05/">
+May
+</a>
+<span class="post-count" dir="ltr">(5)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/04/">
+April
+</a>
+<span class="post-count" dir="ltr">(10)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/03/">
+March
+</a>
+<span class="post-count" dir="ltr">(14)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/02/">
+February
+</a>
+<span class="post-count" dir="ltr">(7)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2006/01/">
+January
+</a>
+<span class="post-count" dir="ltr">(8)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2005/">
+2005
+</a>
+<span class="post-count" dir="ltr">(8)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2005/12/">
+December
+</a>
+<span class="post-count" dir="ltr">(6)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2005/11/">
+November
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="https://java-x.blogspot.com/2005/10/">
+October
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div><div class="widget HTML" data-version="1" id="HTML5">
+<div class="widget-content">
+<script async="" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/f(3).txt"></script>
+<!-- BlogSidebar3 -->
+<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-3721999749064364" data-ad-slot="9765479193" data-adsbygoogle-status="done" data-ad-status="filled"><div id="aswift_4_host" style="border: none; height: 280px; width: 336px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;" tabindex="0" title="Advertisement" aria-label="Advertisement"><iframe id="aswift_4" name="aswift_4" browsingtopics="true" style="left:0;position:absolute;top:0;border:0;width:336px;height:280px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="336" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/ads(3).html" data-google-container-id="a!5" data-google-query-id="CP_njd-564MDFWBPDwIdlBIM1Q" data-load-complete="true"></iframe></div></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<div class="clear"></div>
+</div><div class="widget Feed" data-version="1" id="Feed2">
+<h2>
+</h2>
+<div class="widget-content" id="Feed2_feedItemListDisplay"><ul><li><span class="item-title"><a href="https://dzone.com/articles/jenkins-vs-bamboo-battle-of-the-best-cicd-tools" target="_self">Jenkins vs. Bamboo: Battle Of The Best CI/CD Tools</a></span><span class="item-date">&nbsp;-&nbsp;18/11/2019</span></li><li><span class="item-title"><a href="https://dzone.com/articles/secure-spring-rest-with-spring-security-and-oauth2" target="_self">Secure Spring REST With Spring Security and OAuth2</a></span><span class="item-date">&nbsp;-&nbsp;23/02/2018</span></li><li><span class="item-title"><a href="https://dzone.com/articles/comparing-the-efficiency-of-a-spring-boot-project" target="_self">Comparing the Efficiency of a Spring Boot Project</a></span><span class="item-date">&nbsp;-&nbsp;19/01/2024</span></li><li><span class="item-title"><a href="https://dzone.com/articles/how-to-use-langchain4j-with-localai" target="_self">How To Use LangChain4j With LocalAI</a></span><span class="item-date">&nbsp;-&nbsp;19/01/2024</span></li><li><span class="item-title"><a href="https://dzone.com/articles/understanding-lazy-evaluation-in-java-streams" target="_self">Understanding Lazy Evaluation in Java Streams</a></span><span class="item-date">&nbsp;-&nbsp;18/01/2024</span></li></ul></div>
+<div class="clear"></div>
+</div><div class="widget Feed" data-version="1" id="Feed1">
+<h2>
+</h2>
+<div class="widget-content" id="Feed1_feedItemListDisplay"><ul><li><span class="item-title"><a href="https://www.infoq.com/articles/architecting-java-persistence-patterns-and-strategies/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=Java-articles" target="_self">Article: Architecting with Java Persistence: Patterns and Strategies</a></span><span class="item-date">&nbsp;-&nbsp;04/01/2024</span></li><li><span class="item-title"><a href="https://www.infoq.com/articles/helidon-4-adopts-virtual-threads/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=Java-articles" target="_self">Article: Helidon 4 Adopts Virtual Threads: Explore the Increased 
+Performance and Improved DevEx</a></span><span class="item-date">&nbsp;-&nbsp;07/12/2023</span></li><li><span class="item-title"><a href="https://www.infoq.com/articles/java-trends-report-2023/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=Java-articles" target="_self">Article: InfoQ Java Trends Report - November 2023</a></span><span class="item-date">&nbsp;-&nbsp;28/11/2023</span></li><li><span class="item-title"><a href="https://www.infoq.com/articles/randomized-test-data-java/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=Java-articles" target="_self">Article: Efficiently Arranging Test Data: Streamlining Setup with Instancio</a></span><span class="item-date">&nbsp;-&nbsp;21/11/2023</span></li><li><span class="item-title"><a href="https://www.infoq.com/articles/persist-with-jakartaee-data/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=Java-articles" target="_self">Article: Simplifying Persistence Integration with Jakarta EE Data</a></span><span class="item-date">&nbsp;-&nbsp;04/10/2023</span></li></ul></div>
+<div class="clear"></div>
+</div><div class="widget BlogSearch" data-version="1" id="BlogSearch1">
+<h2 class="title">Search This Blog</h2>
+<div class="widget-content">
+<div id="BlogSearch1_form">
+<form action="https://java-x.blogspot.com/search" class="gsc-search-box" target="_top">
+<table cellpadding="0" cellspacing="0" class="gsc-search-box">
+<tbody>
+<tr>
+<td class="gsc-input">
+<input autocomplete="off" class="gsc-input" name="q" size="10" title="search" type="text" value="">
+</td>
+<td class="gsc-search-button">
+<input class="gsc-search-button" title="search" type="submit" value="Search">
+</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="widget ReportAbuse" data-version="1" id="ReportAbuse1">
+<h3 class="title">
+<a class="report_abuse" href="https://www.blogger.com/go/report-abuse" rel="noopener nofollow" target="_blank">
+Report Abuse
+</a>
+</h3>
+</div><!--Failed to render gadget 'Profile1'.
+
+There was an error processing the markup.
+-->
+</div>
+</aside>
+</div>
+</div>
+</div>
+<div style="clear: both"></div>
+<!-- columns -->
+</div>
+<!-- main -->
+</div>
+</div>
+<div class="main-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<footer>
+<div class="footer-outer">
+<div class="footer-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left footer-fauxborder-left">
+<div class="fauxborder-right footer-fauxborder-right"></div>
+<div class="region-inner footer-inner">
+<div class="foot no-items section" id="footer-1"></div>
+<table border="0" cellpadding="0" cellspacing="0" class="section-columns columns-2">
+<tbody>
+<tr>
+<td class="first columns-cell">
+<div class="foot no-items section" id="footer-2-1"></div>
+</td>
+<td class="columns-cell">
+<div class="foot no-items section" id="footer-2-2"></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- outside of the include in order to lock Attribution widget -->
+<div class="foot section" id="footer-3" name="Footer"><div class="widget Attribution" data-version="1" id="Attribution1">
+<div class="widget-content" style="text-align: center;">
+Powered by <a href="https://www.blogger.com/" target="_blank">Blogger</a>.
+</div>
+<div class="clear"></div>
+</div></div>
+</div>
+</div>
+<div class="footer-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</footer>
+<!-- content -->
+</div>
+</div>
+<div class="content-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    window.setTimeout(function() {
+        document.body.className = document.body.className.replace('loading', '');
+      }, 10);
+  </script>
+
+<script type="text/javascript" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/679989195-widgets.js"></script>
+<script type="text/javascript">
+window['__wavt'] = 'AOuZoY5gxn38MS9PxVTWPazU9xzD4JCWmA:1705735990501';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d18313336','//java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html','18313336');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '18313336', 'title': 'Abhi On Java', 'url': 'https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html', 'canonicalUrl': 'http://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html', 'homepageUrl': 'https://java-x.blogspot.com/', 'searchUrl': 'https://java-x.blogspot.com/search', 'canonicalHomepageUrl': 'http://java-x.blogspot.com/', 'blogspotFaviconUrl': 'https://java-x.blogspot.com/favicon.ico', 'bloggerUrl': 'https://www.blogger.com', 'hasCustomDomain': false, 'httpsEnabled': true, 'enabledCommentProfileImages': true, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': 'UA-346891-1', 'encoding': 'UTF-8', 'locale': 'en', 'localeUnderscoreDelimited': 'en', 'languageDirection': 'ltr', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'isDynamicViewsAvailable': true, 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Abhi On Java - Atom\x22 href\x3d\x22https://java-x.blogspot.com/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22Abhi On Java - RSS\x22 href\x3d\x22https://java-x.blogspot.com/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Abhi On Java - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/18313336/posts/default\x22 /\x3e\n\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Abhi On Java - Atom\x22 href\x3d\x22https://java-x.blogspot.com/feeds/1822065214754061298/comments/default\x22 /\x3e\n', 'meTag': '', 'adsenseClientId': 'ca-pub-3721999749064364', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'adsenseHasAds': true, 'adsenseAutoAds': false, 'boqCommentIframeForm': true, 'loginRedirectParam': '', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/920e6374032705cc', 'plusOneApiSrc': 'https://apis.google.com/js/platform.js', 'disableGComments': true, 'interstitialAccepted': false, 'sharing': {'platforms': [{'name': 'Get link', 'key': 'link', 'shareMessage': 'Get link', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': 'Share to Facebook', 'target': 'facebook'}, {'name': 'BlogThis!', 'key': 'blogThis', 'shareMessage': 'BlogThis!', 'target': 'blog'}, {'name': 'Twitter', 'key': 'twitter', 'shareMessage': 'Share to Twitter', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': 'Share to Pinterest', 'target': 'pinterest'}, {'name': 'Email', 'key': 'email', 'shareMessage': 'Email', 'target': 'email'}], 'disableGooglePlus': true, 'googlePlusShareButtonWidth': 0, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27en\x27};\x3c/script\x3e'}, 'hasCustomJumpLinkMessage': true, 'jumpLinkMessage': 'Continue to full post \xbb', 'pageType': 'item', 'postId': '1822065214754061298', 'pageName': 'Jenkins Offline Install on Red Hat Enterprise Linux Server', 'pageTitle': 'Abhi On Java: Jenkins Offline Install on Red Hat Enterprise Linux Server'}}, {'name': 'features', 'data': {}}, {'name': 'messages', 'data': {'edit': 'Edit', 'linkCopiedToClipboard': 'Link copied to clipboard!', 'ok': 'Ok', 'postLink': 'Post Link'}}, {'name': 'template', 'data': {'name': 'custom', 'localizedName': 'Custom', 'isResponsive': false, 'isAlternateRendering': false, 'isCustom': true}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': 'Jenkins Offline Install on Red Hat Enterprise Linux Server', 'description': 'In this post we will see how to do an offline install Jenkins and required plugins on a Red Hat Enterprise Linux Server release 7.3. This is...', 'url': 'https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html', 'type': 'item', 'isSingleItem': true, 'isMultipleItems': false, 'isError': false, 'isPage': false, 'isPost': true, 'isHomepage': false, 'isArchive': false, 'isLabelSearch': false, 'postId': 1822065214754061298}}]);
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML8', 'header2', document.getElementById('HTML8'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PageListView', new _WidgetInfo('PageList1', 'crosscol-overflow', document.getElementById('PageList1'), {'title': 'Pages', 'links': [{'isCurrentPage': false, 'href': 'https://java-x.blogspot.com/', 'title': 'Home'}, {'isCurrentPage': false, 'href': 'https://java-x.blogspot.com/p/blog-page.html', 'id': '6596592341088894055', 'title': 'Java 8'}, {'isCurrentPage': false, 'href': 'https://java-x.blogspot.com/p/java-9.html', 'id': '2780310387781826509', 'title': 'Java 9 Features with Examples'}], 'mobile': false, 'showPlaceholder': false, 'hasCurrentPage': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/436684826-lbx.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/3268905543-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML4', 'main', document.getElementById('HTML4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML6', 'main', document.getElementById('HTML6'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PopularPostsView', new _WidgetInfo('PopularPosts1', 'main', document.getElementById('PopularPosts1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'sidebar-right-1', document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar-right-1', document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LabelView', new _WidgetInfo('Label1', 'sidebar-right-1', document.getElementById('Label1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML3', 'sidebar-right-1', document.getElementById('HTML3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar-right-1', document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': 'Loading\x26hellip;'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML5', 'sidebar-right-1', document.getElementById('HTML5'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_FeedView', new _WidgetInfo('Feed2', 'sidebar-right-1', document.getElementById('Feed2'), {'title': '', 'showItemDate': true, 'showItemAuthor': false, 'feedUrl': 'http://feeds.dzone.com/java', 'numItemsShow': 5, 'loadingMsg': 'Loading...', 'openLinksInNewWindow': false, 'useFeedWidgetServ': 'true'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_FeedView', new _WidgetInfo('Feed1', 'sidebar-right-1', document.getElementById('Feed1'), {'title': '', 'showItemDate': true, 'showItemAuthor': false, 'feedUrl': 'https://www.infoq.com/feed/java/articles', 'numItemsShow': 5, 'loadingMsg': 'Loading...', 'openLinksInNewWindow': false, 'useFeedWidgetServ': 'true'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogSearchView', new _WidgetInfo('BlogSearch1', 'sidebar-right-1', document.getElementById('BlogSearch1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ReportAbuseView', new _WidgetInfo('ReportAbuse1', 'sidebar-right-1', document.getElementById('ReportAbuse1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ProfileView', new _WidgetInfo('Profile1', 'sidebar-right-1', document.getElementById('Profile1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_FeaturedPostView', new _WidgetInfo('FeaturedPost1', 'sidebar-right-1', document.getElementById('FeaturedPost1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AttributionView', new _WidgetInfo('Attribution1', 'footer-3', document.getElementById('Attribution1'), {}, 'displayModeFull'));
+</script>
+
+<ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><div id="aswift_5_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_5" name="aswift_5" browsingtopics="true" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/ads(4).html" data-google-container-id="a!6" data-load-complete="true"></iframe></div></ins><table cellspacing="0" cellpadding="0" role="presentation" class="gstl_50 gssb_c" style="width: 162px; display: none; top: 794px; left: 956px; position: absolute;"><tbody><tr><td class="gssb_f"></td><td class="gssb_e" style="width: 100%;"></td></tr></tbody></table><iframe src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/aframe.html" width="0" height="0" style="display: none;"></iframe></body><iframe id="google_esf" name="google_esf" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/zrt_lookup_fy2021.html" style="display: none;"></iframe><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important; width: 100vw !important; height: 100vh !important; inset: 0px auto auto 0px !important; clear: none !important; float: none !important; margin: 0px !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; padding: 0px !important; position: fixed !important; vertical-align: baseline !important; visibility: visible !important; z-index: 2147483647 !important; background: transparent !important;" aria-hidden="true" data-ad-status="filled" data-vignette-loaded="true"><div id="aswift_6_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none !important; height: 100vh !important; width: 100vw !important; margin: 0px !important; padding: 0px !important; position: relative !important; visibility: visible !important; background-color: transparent !important; display: inline-block !important; inset: auto !important; clear: none !important; float: none !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; vertical-align: baseline !important; z-index: auto !important;"><iframe id="aswift_6" name="aswift_6" browsingtopics="true" style="width: 100vw !important; height: 100vh !important; inset: 0px auto auto 0px !important; position: absolute !important; clear: none !important; display: inline !important; float: none !important; margin: 0px !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; padding: 0px !important; vertical-align: baseline !important; visibility: visible !important; z-index: auto !important;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="" height="" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting" src="./Abhi On Java_ Jenkins Offline Install on Red Hat Enterprise Linux Server_files/zrt_lookup_fy2021(1).html" data-google-container-id="a!7" data-google-query-id="CLS0jd-564MDFbGGrAIdlPQD4Q" data-load-complete="true"></iframe></div></ins></html>

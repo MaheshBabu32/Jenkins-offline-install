@@ -1,0 +1,87 @@
+install jenkins on ubuntu............1
+
+https://itslinuxfoss.com/fix-curl-could-not-resolve-host-error-linux/ (browser)
+
+
+java --version......... (jdk 11)
+
+ ls....
+ 
+ Add Jenkins repository............................
+ 
+ curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key |sudo tee \ ..........
+ /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+ or
+  sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \ ...............
+    https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+    
+    
+ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \ ...............
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+  
+ 
+ Disable IPv6 Permanently...................................
+ 
+ cat /proc/sys/net/ipv6/conf/all/disable_ipv6..........
+ 
+ sudo nano /etc/sysctl.conf.............
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+
+sudo sysctl -p..........
+
+sudo nano /etc/resolv.conf.............
+nameserver 127.0.0.53
+options edns0 trust-ad
+search localdomain
+nameserver 192.168.1.28
+nameserver      8.8.8.8
+nameserver      8.8.4.4
+
+
+sudo apt update......
+sudo apt install curl.......
+
+    
+Install Jenkins........................................
+
+sudo apt-get update
+sudo apt-get install fontconfig openjdk-17-jre
+sudo apt-get install jenkins
+sudo systemctl status jenkins
+sudo systemctl restart jenkins
+sudo systemctl start jenkins 
+sudo systemctl enabled jenkins 
+    
+Configure firewall.....................................
+
+browser localhost:8080
+sudo ufw allow 8080
+sudo ufw allow ssh
+sudo ufw enable
+sudo ufw status
+
+
+Browser.............................
+localhost:8080
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+
+
+
+
+
+
+jenkins-2  redhat
+
+https://java-x.blogspot.com/2017/10/jenkins-offline-install-on-red-hat.html#google_vignette
+
+
+
+
+
+
+
